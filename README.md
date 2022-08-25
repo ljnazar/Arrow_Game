@@ -1,2 +1,2 @@
 # Project_JS
- JavaScript implementation
+ JavaScript implementation - in progress
