@@ -2,11 +2,11 @@
 
 /* En base al alto de la pantalla tiene que calcular la velocidad (duración de la animación) para que llegue exactamente a la posición de la flecha fija según el ritmo de la canción. */
 
-.animation-arrow {
-  -webkit-animation: movement-y 4s linear;
-  -o-animation: movement-y 4s linear;
-  -moz-animation: movement-y 4s linear;
-  animation: movement-y calc 4s linear;
+.animation-arrows {
+  -webkit-animation: movement-y 2s linear;
+  -o-animation: movement-y 2s linear;
+  -moz-animation: movement-y 2s linear;
+  animation: movement-y calc 2s linear;
 }
   
 @keyframes movement-y {
@@ -22,8 +22,4 @@
     -moz-transform: translateY(0px);
     transform: translateY(0px);
   }
-}
-
-.p-40px {
-  padding: 40px;
 }
