@@ -551,6 +551,14 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+.absolute {
+  position: absolute;
+}
+
+.top-8 {
+  top: 2rem;
+}
+
 .mx-2 {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
@@ -560,12 +568,12 @@ video {
   margin-top: 2rem;
 }
 
-.flex {
-  display: flex;
-}
-
 .table {
   display: table;
+}
+
+.h-screen {
+  height: 100vh;
 }
 
 .h-20 {

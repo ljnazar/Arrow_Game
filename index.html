@@ -10,16 +10,18 @@
 </head>
 <body class="overflow-x-hidden overflow-y-hidden">
     <main>
-        <section class="mt-8">
+        <section class="mt-8 h-screen">
 
-            <div class="flex">
-                <img src="img/left-arrow.svg" alt="arrow-left" class="h-20 mx-2">
-                <img src="img/up-arrow.svg" alt="arrow-up" class="h-20 mx-2">
-                <img src="img/down-arrow.svg" alt="arrow-down" class="h-20 mx-2">
-                <img src="img/right-arrow.svg" alt="arrow-right" class="h-20 mx-2">
-            </div>
+            <table id="table-arrows-fixed">
+                <tr>
+                    <td><img src="img/left-arrow.svg" alt="arrow-left" class="h-20 mx-2"></td>
+                    <td><img src="img/up-arrow.svg" alt="arrow-up" class="h-20 mx-2"></td>
+                    <td><img src="img/down-arrow.svg" alt="arrow-down" class="h-20 mx-2"></td>
+                    <td><img src="img/right-arrow.svg" alt="arrow-right" class="h-20 mx-2"></td>
+                </tr>
+            </table>
 
-            <table class="animation-arrows">
+            <table id="table-arrows-song" class="animation-arrows">
                 <tr>
                     <td><img src="img/left-arrow.svg" alt="arrow-left" class="h-20 mx-2"></td>
                     <td><img src="img/up-arrow.svg" alt="arrow-up" class="h-20 mx-2"></td>
@@ -56,5 +58,6 @@
     </main>
     <footer>
     </footer>
+    <script type="text/javascript" src="js/app.js"></script>
 </body>
 </html>
