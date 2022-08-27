@@ -551,12 +551,24 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+.fixed {
+  position: fixed;
+}
+
 .absolute {
   position: absolute;
 }
 
-.top-8 {
-  top: 2rem;
+.z-10 {
+  z-index: 10;
+}
+
+.z-0 {
+  z-index: 0;
+}
+
+.z-20 {
+  z-index: 20;
 }
 
 .mx-2 {
@@ -568,16 +580,24 @@ video {
   margin-top: 2rem;
 }
 
+.flex {
+  display: flex;
+}
+
 .table {
   display: table;
 }
 
-.h-screen {
-  height: 100vh;
-}
-
 .h-20 {
   height: 5rem;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
 }
 
 .overflow-x-hidden {
@@ -586,4 +606,13 @@ video {
 
 .overflow-y-hidden {
   overflow-y: hidden;
+}
+
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.pt-8 {
+  padding-top: 2rem;
 }

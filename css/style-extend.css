@@ -6,7 +6,7 @@
   -webkit-animation: movement-y 4s linear;
   -o-animation: movement-y 4s linear;
   -moz-animation: movement-y 4s linear;
-  animation: movement-y 4s linear;
+  animation: movement-y var(--duration) linear;
 }
   
 @keyframes movement-y {
@@ -17,9 +17,13 @@
     transform: translateY(100vh);
   }
   100% {
-    -webkit-transform: translateY(calc(var(--asd) - 150px));
-    -o-transform: translateY(calc(var(--asd) - 150px));
-    -moz-transform: translateY(calc(var(--asd) - 150px));
-    transform: translateY(calc(var(--asd) - 150px));
+    -webkit-transform: translateY(calc(var(--tableHeight) - 150px));
+    -o-transform: translateY(calc(var(--tableHeight) - 150px));
+    -moz-transform: translateY(calc(var(--tableHeight) - 150px));
+    transform: translateY(calc(var(--tableHeight) - 150px));
   }
+}
+
+body{
+  height: 100vh;
 }
