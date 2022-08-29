@@ -3,9 +3,9 @@
 /* En base al alto de la pantalla tiene que calcular la velocidad (duración de la animación) para que llegue exactamente a la posición de la flecha fija según el ritmo de la canción. */
 
 .animation-arrows {
-  -webkit-animation: movement-y 4s linear;
-  -o-animation: movement-y 4s linear;
-  -moz-animation: movement-y 4s linear;
+  -webkit-animation: movement-y var(--duration) linear;
+  -o-animation: movement-y var(--duration) linear;
+  -moz-animation: movement-y var(--duration) linear;
   animation: movement-y var(--duration) linear;
 }
   
