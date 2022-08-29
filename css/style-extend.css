@@ -1,7 +1,7 @@
 /* Animations */
 
 /* En base al alto de la pantalla tiene que calcular la velocidad (duración de la animación) para que llegue exactamente a la posición de la flecha fija según el ritmo de la canción. */
-
+/*
 .animation-arrows {
   -webkit-animation: movement-y var(--duration) linear;
   -o-animation: movement-y var(--duration) linear;
@@ -23,7 +23,52 @@
     transform: translateY(calc(var(--tableHeight) - 150px));
   }
 }
+*/
 
-body{
+li {
+  list-style-type: none;
+  display: inline-block;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  z-index: -1;
+}
+
+nav ul {
+  display: flex;
+}
+
+nav ul a {
+  opacity: .5;
+  position: relative;
+  transition: opacity .2s linear;
+}
+
+nav ul a::after {
+  content: '';
+  position: absolute; 
+  bottom: 0;
+  height: 8px;
+  opacity: 0;
+  right: 0;
+  left: 0;
+  background: #CDF27E;
+  transition: opacity .2s linear;
+}
+nav ul a:hover {
+  opacity: .8;
+}
+
+nav ul a.active,
+nav ul a.active::after {
+  opacity: 1;
+}
+
+td>img {
+  display:grid;
+  font-size: 12rem;
   height: 100vh;
+  place-items: center;
 }
