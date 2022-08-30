@@ -1,27 +1,26 @@
-let tableFixed = document.getElementById("table-arrows-fixed");
-let tableSong = document.getElementById("table-arrows-song");
+//let tableFixed = document.getElementById("table-arrows-fixed");
+//let tableSong = document.getElementById("table-arrows-song");
 
-let rootElement = document.documentElement;
+//let rootElement = document.documentElement;
 
 /* Code to determine variable table height */
-let tableHeight = "-" + tableSong.offsetHeight + "px";
-rootElement.style.setProperty("--tableHeight", tableHeight);
+/*let tableHeight = "-" + tableSong.offsetHeight + "px";
+rootElement.style.setProperty("--tableHeight", tableHeight);*/
 
 /* Code to calculate variable duration of translateY */
 /* Allows to give a fixed speed to the animation */
-let totalPageHeight = document.body.scrollHeight;
+/*let totalPageHeight = document.body.scrollHeight;
 let speed = 200;
 let duration = `${totalPageHeight / speed}s`;
 rootElement.style.setProperty("--duration", duration);
-console.log(duration);
+console.log(duration);*/
 
 /* Code to determine position of element HTML */
 /*let positionTableFixedTop = tableFixed.offsetTop;
-console.log(positionTableFixedTop);*/
-
-/*let positionTableSongTop = tableSong.offsetTop;
-console.log(positionTableSongTop);*/
-/*let positionTableSong = tableSong.getBoundingClientRect();
+console.log(positionTableFixedTop);
+let positionTableSongTop = tableSong.offsetTop;
+console.log(positionTableSongTop);
+let positionTableSong = tableSong.getBoundingClientRect();
 console.log("x: "+ positionTableSong.x);*/
 
 
@@ -79,17 +78,13 @@ const observer = new IntersectionObserver(spyItem, {
 
 arrows.forEach((arrow) => observer.observe(arrow));
 
-/*
-() => {
-  console.log("prueba");
-  window.scrollBy(0,1);
-  scrolldelay = setTimeout(pageScroll,10);
-}*/
 
-function pageScroll() {
+const pageScroll = () => {
+  console.log("prueba");
   window.scrollBy(0,1);
   scrolldelay = setTimeout(pageScroll,4);
 }
+
 pageScroll();
 
 
