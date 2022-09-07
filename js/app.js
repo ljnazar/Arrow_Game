@@ -1,61 +1,115 @@
-//let tableFixed = document.getElementById("table-arrows-fixed");
-//let tableSong = document.getElementById("table-arrows-song");
+const sectionGame = document.getElementById("sectionGame");
 
-//let rootElement = document.documentElement;
+sectionGame.classList.add("flex");
+sectionGame.classList.add("flex-col");
+sectionGame.classList.add("items-center");
 
-/* Code to determine variable table height */
-/*let tableHeight = "-" + tableSong.offsetHeight + "px";
-rootElement.style.setProperty("--tableHeight", tableHeight);*/
+track1 = [
+    0,1,0,0,
+    1,0,0,1,
+    0,0,1,0,
+    1,0,0,0,
+    0,0,0,1,
+    0,0,0,1,
+    0,1,0,0,
+    1,0,0,1,
+    1,0,0,0,
+    0,0,0,1,
+    0,0,0,1,
+    0,0,1,0,
+    0,0,0,0,
+    0,0,0,1,
+    0,1,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    1,0,0,1,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,1,0,0,
+    0,1,0,0,
+    0,0,0,0,
+    0,0,1,1,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,1,0,0,
+    0,0,0,0,
+    0,0,1,0,
+    0,0,0,0,
+    1,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0];
 
-/* Code to calculate variable duration of translateY */
-/* Allows to give a fixed speed to the animation */
-/*let totalPageHeight = document.body.scrollHeight;
-let speed = 200;
-let duration = `${totalPageHeight / speed}s`;
-rootElement.style.setProperty("--duration", duration);
-console.log(duration);*/
+const arrowLeft = `<img id="left" src="img/up-arrow.svg" alt="arrow-up" class="h-20 mx-2"></img>`;
+const arrowUp = `<img id="up" src="img/up-arrow.svg" alt="arrow-up" class="h-20 mx-2">`;
+const arrowDown = `<img id="down" src="img/down-arrow.svg" alt="arrow-down" class="h-20 mx-2">`;
+const arrowRight = `<img id="right" src="img/right-arrow.svg" alt="arrow-right" class="h-20 mx-2">`;
 
-/* Code to determine position of element HTML */
-/*let positionTableFixedTop = tableFixed.offsetTop;
-console.log(positionTableFixedTop);
-let positionTableSongTop = tableSong.offsetTop;
-console.log(positionTableSongTop);
-let positionTableSong = tableSong.getBoundingClientRect();
-console.log("x: "+ positionTableSong.x);*/
+const arrowsFixed = `
+<nav class="fixed pt-10 z-0 flex justify-center">
+    <ul id="spy-nav" class="flex">
+        <li><a href="#left">${arrowLeft}</a></li>
+        <li><a href="#up">${arrowUp}</a></li>
+        <li><a href="#down">${arrowDown}</a></li>
+        <li><a href="#right">${arrowRight}</a></li>
+    </ul>
+</nav>`;
 
+sectionGame.innerHTML = arrowsFixed;
 
-
-/* Test 1 */
-/*window.addEventListener('load', function(){
-let i = 0;
-for(i=0;i<15000;i++){
-    console.log(tableSong.getBoundingClientRect().top);
-}
-});*/
-/*console.log(tableSong.getBoundingClientRect().top);*/
-
-/* Test 2 */
-/*
-const callback = (entries) => {
-    entries.map((entry) => {
-        console.log("Hello world!");
-    });
+const contentTable = () => {
+    let count = 0;
+    let mainTable = document.createElement("table");
+    mainTable.classList.add("absolute");
+    mainTable.classList.add("top-96");
+    mainTable.classList.add("z-10");
+    sectionGame.append(mainTable);
+    let rowTable = "";
+    let aux = "";
+    for(const arrow of track1){
+        console.log(arrow);
+        if(count === 0){
+            rowTable = document.createElement("tr");
+            mainTable.append(rowTable);
+            arrowDirection = arrowLeft;
+        }
+        else if(count === 1){
+            arrowDirection = arrowUp;
+        }
+        else if(count === 2){
+            arrowDirection = arrowDown;
+        }
+        else if(count === 3){
+            arrowDirection = arrowRight;
+            count = -1;
+        }
+        if(arrow === 0){
+            aux += `<td><div class="h-20 mx-2"></div></td>`;
+        }
+        else if(arrow === 1){
+            aux += `<td>${arrowDirection}</td>`;
+        }
+        if(count === -1){
+            rowTable.innerHTML = aux;
+            aux = "";
+        }
+        count++;
+    }
 };
 
-let arrow1 = document.getElementById("arrow-1");
-let arrow2 = document.getElementById("arrow-2");
+contentTable();
 
-let options = {
-    root: arrow1,
-    rootMargin: "0px",
-    threshold: 1.0
-}
 
-let observer = new IntersectionObserver(callback, options);
 
-observer.observe(arrow2);*/
-
-/* Test 3 */
 
 const spyNav = document.getElementById("spy-nav");
 const arrows = [...document.querySelectorAll("td > img")];
@@ -72,20 +126,18 @@ const spyItem = (entries, observer) => {
 };
 
 const observer = new IntersectionObserver(spyItem, {
-  rootMargin: "-5% 0% -95% 0%",
-  root: document, // <- This is only here to force the iframe document.
+  root: null,
+  rootMargin: "-8% 0% -92% 0%"
+  //threshold: 0.2
 });
 
 arrows.forEach((arrow) => observer.observe(arrow));
 
-
 const pageScroll = () => {
-  console.log("prueba");
   window.scrollBy(0,1);
   scrolldelay = setTimeout(pageScroll,4);
 }
-
-pageScroll();
+//pageScroll();
 
 
 

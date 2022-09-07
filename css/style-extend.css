@@ -1,49 +1,6 @@
-/* Animations */
-
-/* En base al alto de la pantalla tiene que calcular la velocidad (duración de la animación) para que llegue exactamente a la posición de la flecha fija según el ritmo de la canción. */
-/*
-.animation-arrows {
-  -webkit-animation: movement-y var(--duration) linear;
-  -o-animation: movement-y var(--duration) linear;
-  -moz-animation: movement-y var(--duration) linear;
-  animation: movement-y var(--duration) linear;
-}
-  
-@keyframes movement-y {
-  0% {
-    -webkit-transform: translateY(100vh);
-    -o-transform: translateY(100vh);
-    -moz-transform: translateY(100vh);
-    transform: translateY(100vh);
-  }
-  100% {
-    -webkit-transform: translateY(calc(var(--tableHeight) - 150px));
-    -o-transform: translateY(calc(var(--tableHeight) - 150px));
-    -moz-transform: translateY(calc(var(--tableHeight) - 150px));
-    transform: translateY(calc(var(--tableHeight) - 150px));
-  }
-}
-*/
-
-li {
-  list-style-type: none;
-  display: inline-block;
-}
-
-nav {
-  position: fixed;
-  top: 0;
-  z-index: -1;
-}
-
-nav ul {
-  display: flex;
-}
-
 nav ul a {
   opacity: .5;
   position: relative;
-  transition: opacity .2s linear;
 }
 
 nav ul a::after {
@@ -55,15 +12,13 @@ nav ul a::after {
   right: 0;
   left: 0;
   background: #CDF27E;
-  transition: opacity .2s linear;
-}
-nav ul a:hover {
-  opacity: .8;
+  border: solid 2px #CDF27E;
 }
 
 nav ul a.active,
 nav ul a.active::after {
   opacity: 1;
+  border: solid 2px black;
 }
 
 td>img {

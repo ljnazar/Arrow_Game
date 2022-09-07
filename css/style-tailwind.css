@@ -555,13 +555,25 @@ video {
   position: fixed;
 }
 
+.absolute {
+  position: absolute;
+}
+
+.top-96 {
+  top: 24rem;
+}
+
+.z-0 {
+  z-index: 0;
+}
+
+.z-10 {
+  z-index: 10;
+}
+
 .mx-2 {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
-}
-
-.mt-60 {
-  margin-top: 15rem;
 }
 
 .flex {
@@ -576,10 +588,6 @@ video {
   height: 5rem;
 }
 
-.h-64 {
-  height: 16rem;
-}
-
 .flex-col {
   flex-direction: column;
 }
@@ -592,6 +600,6 @@ video {
   justify-content: center;
 }
 
-.pt-8 {
-  padding-top: 2rem;
+.pt-10 {
+  padding-top: 2.5rem;
 }
