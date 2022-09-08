@@ -1,20 +1,35 @@
-const sectionGame = document.getElementById("sectionGame");
+/*const sectionNamePlayer = document.getElementById("sectionNamePlayer");
 
-sectionGame.classList.add("flex");
-sectionGame.classList.add("flex-col");
-sectionGame.classList.add("items-center");
+const namePlayer = `
+<form>
+    <div>
+        <label for="uname">Nombre del Jugador: </label>
+        <input type="text" id="uname" name="name">
+    </div>
+    <div>
+        <button onclick="startGame()">Enviar</button>
+    </div>
+</form>`;
+
+sectionNamePlayer.innerHTML = namePlayer;*/
 
 track1 = [
     0,1,0,0,
     1,0,0,1,
+    0,0,0,0,
     0,0,1,0,
+    0,0,0,0,
     1,0,0,0,
     0,0,0,1,
+    0,0,0,0,
+    0,0,0,0,
     0,0,0,1,
     0,1,0,0,
     1,0,0,1,
+    0,0,0,0,
     1,0,0,0,
     0,0,0,1,
+    0,0,0,0,
     0,0,0,1,
     0,0,1,0,
     0,0,0,0,
@@ -27,6 +42,7 @@ track1 = [
     0,0,0,0,
     0,0,0,0,
     0,1,0,0,
+    0,0,0,0,
     0,1,0,0,
     0,0,0,0,
     0,0,1,1,
@@ -49,6 +65,8 @@ track1 = [
     0,0,0,0,
     0,0,0,0];
 
+const sectionGame = document.getElementById("sectionGame");
+
 const arrowLeft = `<img id="left" src="img/up-arrow.svg" alt="arrow-up" class="h-20 mx-2"></img>`;
 const arrowUp = `<img id="up" src="img/up-arrow.svg" alt="arrow-up" class="h-20 mx-2">`;
 const arrowDown = `<img id="down" src="img/down-arrow.svg" alt="arrow-down" class="h-20 mx-2">`;
@@ -64,8 +82,6 @@ const arrowsFixed = `
     </ul>
 </nav>`;
 
-sectionGame.innerHTML = arrowsFixed;
-
 const contentTable = () => {
     let count = 0;
     let mainTable = document.createElement("table");
@@ -76,7 +92,6 @@ const contentTable = () => {
     let rowTable = "";
     let aux = "";
     for(const arrow of track1){
-        console.log(arrow);
         if(count === 0){
             rowTable = document.createElement("tr");
             mainTable.append(rowTable);
@@ -106,10 +121,23 @@ const contentTable = () => {
     }
 };
 
-contentTable();
+//const startGame = () => {
+
+    //sectionNamePlayer.innerHTML = ``;
+
+    sectionGame.classList.add("flex");
+    sectionGame.classList.add("flex-col");
+    sectionGame.classList.add("items-center");
+
+    sectionGame.innerHTML = arrowsFixed;
+
+    contentTable();
+
+//};
 
 
 
+const body = document.body
 
 const spyNav = document.getElementById("spy-nav");
 const arrows = [...document.querySelectorAll("td > img")];
@@ -120,8 +148,11 @@ const spyItem = (entries, observer) => {
     const spy = spyNav.querySelector(`[href="#${id}"`);
 
     spy.classList.remove("active");
+    body.style.backgroundColor = "white";
     if (!entry.isIntersecting) return;
     spy.classList.add("active");
+    console.log(id);
+    body.style.backgroundColor = "red";
   });
 };
 
@@ -135,9 +166,10 @@ arrows.forEach((arrow) => observer.observe(arrow));
 
 const pageScroll = () => {
   window.scrollBy(0,1);
-  scrolldelay = setTimeout(pageScroll,4);
-}
-//pageScroll();
+  scrolldelay = setTimeout(pageScroll,1);
+};
+
+pageScroll();
 
 
 
