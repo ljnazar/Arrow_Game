@@ -1,4 +1,6 @@
-/*const sectionNamePlayer = document.getElementById("sectionNamePlayer");
+const main = document.getElementById("main");
+
+const sectionNamePlayer = document.createElement("section");
 
 const namePlayer = `
 <form>
@@ -7,11 +9,13 @@ const namePlayer = `
         <input type="text" id="uname" name="name">
     </div>
     <div>
-        <button onclick="startGame()">Enviar</button>
+        <button id="joinButton">Enviar</button>
     </div>
 </form>`;
 
-sectionNamePlayer.innerHTML = namePlayer;*/
+sectionNamePlayer.innerHTML = namePlayer;
+
+main.append(sectionNamePlayer);
 
 track1 = [
     0,1,0,0,
@@ -65,29 +69,15 @@ track1 = [
     0,0,0,0,
     0,0,0,0];
 
-const sectionGame = document.getElementById("sectionGame");
-
-const arrowLeft = `<img id="left" src="img/up-arrow.svg" alt="arrow-up" class="h-20 mx-2"></img>`;
+const arrowLeft = `<img id="left" src="img/left-arrow.svg" alt="arrow-up" class="h-20 mx-2"></img>`;
 const arrowUp = `<img id="up" src="img/up-arrow.svg" alt="arrow-up" class="h-20 mx-2">`;
 const arrowDown = `<img id="down" src="img/down-arrow.svg" alt="arrow-down" class="h-20 mx-2">`;
 const arrowRight = `<img id="right" src="img/right-arrow.svg" alt="arrow-right" class="h-20 mx-2">`;
 
-const arrowsFixed = `
-<nav class="fixed pt-10 z-0 flex justify-center">
-    <ul id="spy-nav" class="flex">
-        <li><a href="#left">${arrowLeft}</a></li>
-        <li><a href="#up">${arrowUp}</a></li>
-        <li><a href="#down">${arrowDown}</a></li>
-        <li><a href="#right">${arrowRight}</a></li>
-    </ul>
-</nav>`;
-
-const contentTable = () => {
+const contentTable = (sectionGame) => {
     let count = 0;
     let mainTable = document.createElement("table");
-    mainTable.classList.add("absolute");
-    mainTable.classList.add("top-96");
-    mainTable.classList.add("z-10");
+    mainTable.className = "absolute top-96 z-10";
     sectionGame.append(mainTable);
     let rowTable = "";
     let aux = "";
@@ -121,39 +111,47 @@ const contentTable = () => {
     }
 };
 
-//const startGame = () => {
+const startGame = () => {
 
-    //sectionNamePlayer.innerHTML = ``;
+    sectionNamePlayer.remove();
 
-    sectionGame.classList.add("flex");
-    sectionGame.classList.add("flex-col");
-    sectionGame.classList.add("items-center");
+    const sectionGame = document.createElement("section");
+
+    sectionGame.className = "flex flex-col items-center";
+
+    const arrowsFixed = `
+        <nav class="fixed pt-10 z-0 flex justify-center">
+            <ul id="spy-nav" class="flex">
+                <li><a href="#left">${arrowLeft}</a></li>
+                <li><a href="#up">${arrowUp}</a></li>
+                <li><a href="#down">${arrowDown}</a></li>
+                <li><a href="#right">${arrowRight}</a></li>
+            </ul>
+        </nav>`;
 
     sectionGame.innerHTML = arrowsFixed;
 
-    contentTable();
+    main.append(sectionGame);
 
-//};
+    contentTable(sectionGame);
 
+    const body = document.body;
 
+    const spyNav = document.getElementById("spy-nav");
+    const arrows = [...document.querySelectorAll("td > img")];
 
-const body = document.body
+    const spyItem = (entries, observer) => {
+    entries.forEach((entry) => {
+        const { id } = entry.target;
+        const spy = spyNav.querySelector(`[href="#${id}"`);
 
-const spyNav = document.getElementById("spy-nav");
-const arrows = [...document.querySelectorAll("td > img")];
-
-const spyItem = (entries, observer) => {
-  entries.forEach((entry) => {
-    const { id } = entry.target;
-    const spy = spyNav.querySelector(`[href="#${id}"`);
-
-    spy.classList.remove("active");
-    body.style.backgroundColor = "white";
-    if (!entry.isIntersecting) return;
-    spy.classList.add("active");
-    console.log(id);
-    body.style.backgroundColor = "red";
-  });
+        spy.classList.remove("active");
+        body.style.backgroundColor = "white";
+        if (!entry.isIntersecting) return;
+        spy.classList.add("active");
+        console.log(id);
+        body.style.backgroundColor = "red";
+    });
 };
 
 const observer = new IntersectionObserver(spyItem, {
@@ -170,6 +168,13 @@ const pageScroll = () => {
 };
 
 pageScroll();
+
+};
+
+const joinButton = document.getElementById("joinButton");
+
+joinButton.addEventListener("click", startGame);
+
 
 
 
