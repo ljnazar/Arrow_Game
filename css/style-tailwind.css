@@ -563,12 +563,12 @@ video {
   top: 24rem;
 }
 
-.z-0 {
-  z-index: 0;
-}
-
 .z-10 {
   z-index: 10;
+}
+
+.z-0 {
+  z-index: 0;
 }
 
 .mx-2 {
@@ -598,6 +598,10 @@ video {
 
 .justify-center {
   justify-content: center;
+}
+
+.overflow-y-hidden {
+  overflow-y: hidden;
 }
 
 .pt-10 {

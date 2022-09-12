@@ -1,25 +1,22 @@
-const main = document.getElementById("main");
+const body = document.body;
+//body.classList.add("overflow-y-hidden");
 
+/*const main = document.getElementById("main");
 const sectionNamePlayer = document.createElement("section");
-
 const namePlayer = `
-<form>
-    <div>
-        <label for="uname">Nombre del Jugador: </label>
-        <input type="text" id="uname" name="name">
-    </div>
-    <div>
-        <button id="joinButton">Enviar</button>
-    </div>
-</form>`;
-
+<div>
+    <label for="uname">Nombre del Jugador: </label>
+    <input type="text" id="uname" name="name">
+</div>
+<div>
+    <button id="joinButton">Enviar</button>
+</div>`;
 sectionNamePlayer.innerHTML = namePlayer;
-
-main.append(sectionNamePlayer);
+main.append(sectionNamePlayer);*/
 
 track1 = [
     0,1,0,0,
-    1,0,0,1,
+    1,0,0,0,
     0,0,0,0,
     0,0,1,0,
     0,0,0,0,
@@ -29,7 +26,7 @@ track1 = [
     0,0,0,0,
     0,0,0,1,
     0,1,0,0,
-    1,0,0,1,
+    0,0,0,1,
     0,0,0,0,
     1,0,0,0,
     0,0,0,1,
@@ -41,7 +38,7 @@ track1 = [
     0,1,0,0,
     0,0,0,0,
     0,0,0,0,
-    1,0,0,1,
+    1,0,0,0,
     0,0,0,0,
     0,0,0,0,
     0,0,0,0,
@@ -49,7 +46,7 @@ track1 = [
     0,0,0,0,
     0,1,0,0,
     0,0,0,0,
-    0,0,1,1,
+    0,0,1,0,
     0,0,0,0,
     0,0,0,0,
     0,0,0,0,
@@ -111,14 +108,15 @@ const contentTable = (sectionGame) => {
     }
 };
 
+let spyElement = "";
+let idArrow = "";
+
 const startGame = () => {
 
-    sectionNamePlayer.remove();
+    //sectionNamePlayer.remove();
 
     const sectionGame = document.createElement("section");
-
     sectionGame.className = "flex flex-col items-center";
-
     const arrowsFixed = `
         <nav class="fixed pt-10 z-0 flex justify-center">
             <ul id="spy-nav" class="flex">
@@ -128,55 +126,71 @@ const startGame = () => {
                 <li><a href="#right">${arrowRight}</a></li>
             </ul>
         </nav>`;
-
     sectionGame.innerHTML = arrowsFixed;
-
     main.append(sectionGame);
 
     contentTable(sectionGame);
 
-    const body = document.body;
-
     const spyNav = document.getElementById("spy-nav");
     const arrows = [...document.querySelectorAll("td > img")];
 
-    const spyItem = (entries, observer) => {
-    entries.forEach((entry) => {
-        const { id } = entry.target;
-        const spy = spyNav.querySelector(`[href="#${id}"`);
+    const spyItem = (entries) => {
+        entries.forEach((entry) => {
+            const {id} = entry.target;
+            idArrow = id;
+            const spy = spyNav.querySelector(`[href="#${id}"`);
+            spyElement = spy;
 
-        spy.classList.remove("active");
-        body.style.backgroundColor = "white";
-        if (!entry.isIntersecting) return;
-        spy.classList.add("active");
-        console.log(id);
-        body.style.backgroundColor = "red";
+            spy.classList.remove("active");
+            //body.style.backgroundColor = "white";
+            if (!entry.isIntersecting) return;
+            spy.classList.add("active");
+            //console.log(spy.className);
+            console.log(id);
+            //body.style.backgroundColor = "red";
+        });
+    };
+
+    const observer = new IntersectionObserver(spyItem, {
+        root: null,
+        rootMargin: "-16% 0% -84% 0%"
+        //threshold: 0.2
     });
+
+    arrows.forEach((arrow) => observer.observe(arrow));
+
+    const pageScroll = () => {
+        window.scrollBy(0,1);
+        scrolldelay = setTimeout(pageScroll,1);
+    };
+
+    //pageScroll();
+
+    body.addEventListener("keydown", (e) => {
+        console.log(e);
+        e.preventDefault();
+        if(e.key === "ArrowLeft" && spyElement.className === "active" && idArrow === "left"){
+            body.style.backgroundColor = "blue";
+        }
+        else if(e.key === "ArrowUp" && spyElement.className === "active" && idArrow === "up"){
+            body.style.backgroundColor = "yellow";
+        }
+        else if(e.key === "ArrowDown" && spyElement.className === "active" && idArrow === "down"){
+            body.style.backgroundColor = "gray";
+        }
+        else if(e.key === "ArrowRight" && spyElement.className === "active" && idArrow === "right"){
+            body.style.backgroundColor = "green";
+        }
+        else{
+            console.log("miss");
+            body.style.backgroundColor = "red";
+        }
+    });
+    
 };
 
-const observer = new IntersectionObserver(spyItem, {
-  root: null,
-  rootMargin: "-8% 0% -92% 0%"
-  //threshold: 0.2
-});
+//const joinButton = document.getElementById("joinButton");
 
-arrows.forEach((arrow) => observer.observe(arrow));
+//joinButton.addEventListener("click", startGame);
 
-const pageScroll = () => {
-  window.scrollBy(0,1);
-  scrolldelay = setTimeout(pageScroll,1);
-};
-
-pageScroll();
-
-};
-
-const joinButton = document.getElementById("joinButton");
-
-joinButton.addEventListener("click", startGame);
-
-
-
-
-
-
+startGame();
