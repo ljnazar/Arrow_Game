@@ -274,33 +274,16 @@ const startGame = () => {
 
     pageScroll();
 
-    /*const textColor = (score) => {
-        switch(score){
-            case "PERFECT":
-                return blue;
-            case "GREAT":
-                return green;
-            case "GOOD":
-                return yellow;
-            case "BAD":
-                return violet;
-            case "MISS":
-                return red;
-            default:
-                console.log("Error textColor()");
-        }
-    };*/
-
-    const scoreObj = [
+    const scoreObjects = [
         {score: "PERFECT", color: blue, point: 100},
-        {score: "GREAT", color: blue, point: 50},
-        {score: "GOOD", color: blue, point: 20},
-        {score: "BAD", color: blue, point: -5},
-        {score: "MISS", color: blue, point: -10}
+        {score: "GREAT", color: green, point: 50},
+        {score: "GOOD", color: yellow, point: 20},
+        {score: "BAD", color: violet, point: -5},
+        {score: "MISS", color: red, point: -10}
     ];
 
     body.addEventListener("keydown", (e) => {
-        console.log(e);
+        //console.log(e);
         e.preventDefault();
 
         const textScore = document.createElement("h2");
@@ -313,20 +296,23 @@ const startGame = () => {
               }, 250);
         };
 
+        let scoreSelectObj = scoreObjects.find(obj => obj.score === score);
+
         if(e.key === "ArrowLeft" && spyElement.className === "active" && idArrow === "left"){
 
             spyArrow.classList.add("blink");
             textScore.textContent = score;
-            //textScore.style.color = textColor(score);
-            textScore.style.color = scoreObj.find(obj => obj.score === score).color;
+            textScore.style.color = scoreSelectObj.color;
+            scorePoint += scoreSelectObj.point;
             textScore.classList.add("textAnimate");
             hidden(textScore);
         }
         else if(e.key === "ArrowUp" && spyElement.className === "active" && idArrow === "up"){
 
             spyArrow.classList.add("blink");
-            textScore.textContent = score;
-            //textScore.style.color = textColor(score);
+            textScore.textContent = score;;
+            textScore.style.color = scoreSelectObj.color;
+            scorePoint += scoreSelectObj.point;
             textScore.classList.add("textAnimate");
             hidden(textScore);
 
@@ -335,7 +321,8 @@ const startGame = () => {
 
             spyArrow.classList.add("blink");
             textScore.textContent = score;
-            //textScore.style.color = textColor(score);
+            textScore.style.color = scoreSelectObj.color;
+            scorePoint += scoreSelectObj.point;
             textScore.classList.add("textAnimate");
             hidden(textScore);
 
@@ -344,7 +331,8 @@ const startGame = () => {
 
             spyArrow.classList.add("blink");
             textScore.textContent = score;
-            //textScore.style.color = textColor(score);
+            textScore.style.color = scoreSelectObj.color;
+            scorePoint += scoreSelectObj.point;
             textScore.classList.add("textAnimate");
             hidden(textScore);
 
@@ -356,11 +344,14 @@ const startGame = () => {
 
             score = "MISS";
             textScore.textContent = score;
-            //textScore.style.color = textColor(score);
+            textScore.style.color = scoreObjects[4].color;
+            scorePoint += scoreObjects[4].point;
             textScore.classList.add("textAnimate");
             hidden(textScore);
 
         }
+
+        console.log(scorePoint);
 
     });
 
