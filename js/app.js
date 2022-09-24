@@ -2,6 +2,7 @@ const body = document.body;
 //body.className = "overflow-y-hidden bg-neutral-700";
 body.className = "bg-neutral-700";
 
+
 const main = document.getElementById("main");
 const sectionNamePlayer = document.createElement("section");
 const initialScreen = `
@@ -197,10 +198,6 @@ const startGame = () => {
     //sectionGame.innerHTML = backgroundTrack1 + arrowsFixed + lines;
     sectionGame.innerHTML = arrowsFixed + lines;
 
-    const textScore = document.createElement("h2");
-    textScore.className = "hidden z-20 fixed mx-auto top-1/3 text-black font-bold text-5xl";
-    sectionGame.append(textScore);
-
     main.append(sectionGame);
 
     contentTable(sectionGame);
@@ -223,39 +220,39 @@ const startGame = () => {
 
             if(observer.rootMargin === marginPerfect){
                 spyElement.classList.add("active");
-                body.style.backgroundColor = green;
+                //body.style.backgroundColor = green;
                 score = "GREAT";
                 if (!entry.isIntersecting) return;
-                body.style.backgroundColor = blue;
+                //body.style.backgroundColor = blue;
                 score = "PERFECT";
             }
             else if(observer.rootMargin === marginGreat){
                 spyElement.classList.add("active");
-                body.style.backgroundColor = yellow;
+                //body.style.backgroundColor = yellow;
                 score = "GOOD";
                 if (!entry.isIntersecting) return;
-                body.style.backgroundColor = green;
+                //body.style.backgroundColor = green;
                 score = "GREAT";
             }
             else if(observer.rootMargin === marginGood){
                 spyElement.classList.add("active");
-                body.style.backgroundColor = violet;
+                //body.style.backgroundColor = violet;
                 score = "BAD";
                 if (!entry.isIntersecting) return;
-                body.style.backgroundColor = yellow;
+                //body.style.backgroundColor = yellow;
                 score = "GOOD";
             }
             else if(observer.rootMargin === marginBad){
                 spyElement.classList.add("active");
-                body.style.backgroundColor = red;
+                //body.style.backgroundColor = red;
                 score = "MISS";
                 if (!entry.isIntersecting) return;
-                body.style.backgroundColor = violet;
+                //body.style.backgroundColor = violet;
                 score = "BAD";
             }
             // observer.rootMargin === marginMiss
             else{
-                body.style.backgroundColor = red;
+                //body.style.backgroundColor = red;
                 score = "MISS";
             }
 
@@ -285,46 +282,87 @@ const startGame = () => {
         scrolldelay = setTimeout(pageScroll,1);
     };
 
-    pageScroll();
+    //pageScroll();
+
+    const textColor = (score) => {
+        switch(score){
+            case "PERFECT":
+                return blue;
+            case "GREAT":
+                return green;
+            case "GOOD":
+                return yellow;
+            case "BAD":
+                return violet;
+            case "MISS":
+                return red;
+            default:
+                console.log("Error textColor()");
+        }
+    };
 
     body.addEventListener("keydown", (e) => {
         console.log(e);
         e.preventDefault();
-        textScore.classList.remove("hidden");
-        textScore.classList.add("block");
+
+        const textScore = document.createElement("h2");
+        textScore.className = "text-shadow text-family z-20 fixed mx-auto top-1/3 text-black font-bold text-7xl";
+        sectionGame.append(textScore);
+
+        const hiddenText = () => {
+            setTimeout( () => {
+                textScore.classList.add("d-none");
+              }, 250);
+        };
+
         if(e.key === "ArrowLeft" && spyElement.className === "active" && idArrow === "left"){
 
             spyArrow.classList.add("blink");
             textScore.textContent = score;
-
+            textScore.style.color = textColor(score);
+            textScore.classList.add("textAnimate");
+            hiddenText();
         }
         else if(e.key === "ArrowUp" && spyElement.className === "active" && idArrow === "up"){
 
             spyArrow.classList.add("blink");
             textScore.textContent = score;
+            textScore.style.color = textColor(score);
+            textScore.classList.add("textAnimate");
+            hiddenText();
 
         }
         else if(e.key === "ArrowDown" && spyElement.className === "active" && idArrow === "down"){
 
             spyArrow.classList.add("blink");
             textScore.textContent = score;
+            textScore.style.color = textColor(score);
+            textScore.classList.add("textAnimate");
+            hiddenText();
 
         }
         else if(e.key === "ArrowRight" && spyElement.className === "active" && idArrow === "right"){
 
             spyArrow.classList.add("blink");
             textScore.textContent = score;
+            textScore.style.color = textColor(score);
+            textScore.classList.add("textAnimate");
+            hiddenText();
 
         }
         else{
 
             spyElement.classList.remove("active");
-            body.style.backgroundColor = red;
-            score = "MISS";
+            //body.style.backgroundColor = red;
 
+            score = "MISS";
             textScore.textContent = score;
+            textScore.style.color = textColor(score);
+            textScore.classList.add("textAnimate");
+            hiddenText();
 
         }
+
     });
 
 }

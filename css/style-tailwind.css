@@ -566,10 +566,6 @@ video {
   left: 0px;
 }
 
-.top-96 {
-  top: 24rem;
-}
-
 .top-full {
   top: 100%;
 }
@@ -612,20 +608,12 @@ video {
   margin-right: 1rem;
 }
 
-.block {
-  display: block;
-}
-
 .flex {
   display: flex;
 }
 
 .table {
   display: table;
-}
-
-.hidden {
-  display: none;
 }
 
 .h-screen {
@@ -729,6 +717,11 @@ video {
 .text-3xl {
   font-size: 1.875rem;
   line-height: 2.25rem;
+}
+
+.text-7xl {
+  font-size: 4.5rem;
+  line-height: 1;
 }
 
 .font-bold {

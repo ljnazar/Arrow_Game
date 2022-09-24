@@ -31,19 +31,55 @@ td>img {
 }
 
 .blink {
-  -webkit-animation: animate 0.2s;
-  -moz-animation: animate 0.2s;
-  -o-animation: animate 0.2s;
-  animation: animate 0.2s;
+  -webkit-animation: animateArrow 0.2s;
+  -moz-animation: animateArrow 0.2s;
+  -o-animation: animateArrow 0.2s;
+  animation: animateArrow 0.2s;
 }
 
-@keyframes animate {
+@keyframes animateArrow {
   0%{
     filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
   }
   100% {
     filter: invert(42%) sepia(40%) saturate(666%) hue-rotate(127deg) brightness(98%) contrast(88%);
   }
+}
+
+.textAnimate {
+  -webkit-animation: animateScore 0.3s;
+  -moz-animation: animateScore 0.3s;
+  -o-animation: animateScore 0.3s;
+  animation: animateScore 0.3s;
+}
+
+@keyframes animateScore {
+  0%{
+    font-size: 3.75rem;
+  }
+  50% {
+    font-size: 4.5rem;
+  }
+  100% {
+    font-size: 3.75rem;
+  }
+}
+
+.text-shadow{
+  text-shadow: 0 0 2px black,
+  0 0 4px black,
+  0 0 6px black,
+  0 0 8px white,
+  0 0 10px white,
+  0 0 12px white
+}
+
+.text-family{
+  font-family: 'Chakra Petch', sans-serif;
+}
+
+.d-none{
+  display: none;
 }
 
 /* Perfect */
