@@ -1,6 +1,6 @@
 const body = document.body;
-//body.className = "overflow-y-hidden bg-neutral-700";
-body.className = "bg-neutral-700";
+body.className = "overflow-y-hidden bg-neutral-700";
+//body.className = "bg-neutral-700";
 
 
 const main = document.getElementById("main");
@@ -145,17 +145,7 @@ const yellow = "#eab308";
 const violet = "#d946ef";
 const red = "#ef4444";
 
-/*window.addEventListener("resize", () => {
-    heightScreen = window.innerHeight;
-    optionsPerfect.rootMargin = `-35px 0px ${125 - heightScreen}px 0px`;
-    //console.log(optionsPerfect.rootMargin);
-});
-
-window.addEventListener("scroll", () => {
-    heightScreen = window.innerHeight;
-    optionsPerfect.rootMargin = `-35px 0px ${125 - heightScreen}px 0px`;
-    //console.log(optionsPerfect.rootMargin);
-});*/
+let scorePoint = 0;
 
 const startGame = () => {
 
@@ -282,9 +272,9 @@ const startGame = () => {
         scrolldelay = setTimeout(pageScroll,1);
     };
 
-    //pageScroll();
+    pageScroll();
 
-    const textColor = (score) => {
+    /*const textColor = (score) => {
         switch(score){
             case "PERFECT":
                 return blue;
@@ -299,7 +289,15 @@ const startGame = () => {
             default:
                 console.log("Error textColor()");
         }
-    };
+    };*/
+
+    const scoreObj = [
+        {score: "PERFECT", color: blue, point: 100},
+        {score: "GREAT", color: blue, point: 50},
+        {score: "GOOD", color: blue, point: 20},
+        {score: "BAD", color: blue, point: -5},
+        {score: "MISS", color: blue, point: -10}
+    ];
 
     body.addEventListener("keydown", (e) => {
         console.log(e);
@@ -309,9 +307,9 @@ const startGame = () => {
         textScore.className = "text-shadow text-family z-20 fixed mx-auto top-1/3 text-black font-bold text-7xl";
         sectionGame.append(textScore);
 
-        const hiddenText = () => {
+        const hidden = (element) => {
             setTimeout( () => {
-                textScore.classList.add("d-none");
+                element.classList.add("d-none");
               }, 250);
         };
 
@@ -319,35 +317,36 @@ const startGame = () => {
 
             spyArrow.classList.add("blink");
             textScore.textContent = score;
-            textScore.style.color = textColor(score);
+            //textScore.style.color = textColor(score);
+            textScore.style.color = scoreObj.find(obj => obj.score === score).color;
             textScore.classList.add("textAnimate");
-            hiddenText();
+            hidden(textScore);
         }
         else if(e.key === "ArrowUp" && spyElement.className === "active" && idArrow === "up"){
 
             spyArrow.classList.add("blink");
             textScore.textContent = score;
-            textScore.style.color = textColor(score);
+            //textScore.style.color = textColor(score);
             textScore.classList.add("textAnimate");
-            hiddenText();
+            hidden(textScore);
 
         }
         else if(e.key === "ArrowDown" && spyElement.className === "active" && idArrow === "down"){
 
             spyArrow.classList.add("blink");
             textScore.textContent = score;
-            textScore.style.color = textColor(score);
+            //textScore.style.color = textColor(score);
             textScore.classList.add("textAnimate");
-            hiddenText();
+            hidden(textScore);
 
         }
         else if(e.key === "ArrowRight" && spyElement.className === "active" && idArrow === "right"){
 
             spyArrow.classList.add("blink");
             textScore.textContent = score;
-            textScore.style.color = textColor(score);
+            //textScore.style.color = textColor(score);
             textScore.classList.add("textAnimate");
-            hiddenText();
+            hidden(textScore);
 
         }
         else{
@@ -357,9 +356,9 @@ const startGame = () => {
 
             score = "MISS";
             textScore.textContent = score;
-            textScore.style.color = textColor(score);
+            //textScore.style.color = textColor(score);
             textScore.classList.add("textAnimate");
-            hiddenText();
+            hidden(textScore);
 
         }
 
