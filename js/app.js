@@ -145,7 +145,7 @@ const yellow = "#eab308";
 const violet = "#d946ef";
 const red = "#ef4444";
 
-let scorePoint = 0;
+let scorePoints = 0;
 
 const startGame = () => {
 
@@ -278,23 +278,31 @@ const startGame = () => {
         {score: "PERFECT", color: blue, point: 100},
         {score: "GREAT", color: green, point: 50},
         {score: "GOOD", color: yellow, point: 20},
-        {score: "BAD", color: violet, point: -5},
-        {score: "MISS", color: red, point: -10}
+        {score: "BAD", color: violet, point: -20},
+        {score: "MISS", color: red, point: -50}
     ];
+
+    const numberScore = document.createElement("h2");
+    numberScore.className = "text-shadow text-family z-20 fixed mt-12 ml-6 self-start font-bold text-7xl";
+
+    sectionGame.append(numberScore);
+
+    const hidden = (element) => {
+        setTimeout( () => {
+            element.classList.add("d-none");
+          }, 250);
+    };
 
     body.addEventListener("keydown", (e) => {
         //console.log(e);
         e.preventDefault();
 
+        ////// Ver forma de sacarlo fuera del evento //////
         const textScore = document.createElement("h2");
-        textScore.className = "text-shadow text-family z-20 fixed mx-auto top-1/3 text-black font-bold text-7xl";
-        sectionGame.append(textScore);
+        textScore.className = "text-shadow text-family z-20 fixed mx-auto top-1/3 font-bold text-7xl";
 
-        const hidden = (element) => {
-            setTimeout( () => {
-                element.classList.add("d-none");
-              }, 250);
-        };
+        sectionGame.append(textScore);
+        ///////////////////////////////////////////////////
 
         let scoreSelectObj = scoreObjects.find(obj => obj.score === score);
 
@@ -303,18 +311,22 @@ const startGame = () => {
             spyArrow.classList.add("blink");
             textScore.textContent = score;
             textScore.style.color = scoreSelectObj.color;
-            scorePoint += scoreSelectObj.point;
             textScore.classList.add("textAnimate");
             hidden(textScore);
+            scorePoints += scoreSelectObj.point;
+            numberScore.textContent = scorePoints;
+            numberScore.style.color = scoreSelectObj.color;
         }
         else if(e.key === "ArrowUp" && spyElement.className === "active" && idArrow === "up"){
 
             spyArrow.classList.add("blink");
             textScore.textContent = score;;
             textScore.style.color = scoreSelectObj.color;
-            scorePoint += scoreSelectObj.point;
             textScore.classList.add("textAnimate");
             hidden(textScore);
+            scorePoints += scoreSelectObj.point;
+            numberScore.textContent = scorePoints;
+            numberScore.style.color = scoreSelectObj.color;
 
         }
         else if(e.key === "ArrowDown" && spyElement.className === "active" && idArrow === "down"){
@@ -322,9 +334,11 @@ const startGame = () => {
             spyArrow.classList.add("blink");
             textScore.textContent = score;
             textScore.style.color = scoreSelectObj.color;
-            scorePoint += scoreSelectObj.point;
             textScore.classList.add("textAnimate");
             hidden(textScore);
+            scorePoints += scoreSelectObj.point;
+            numberScore.textContent = scorePoints;
+            numberScore.style.color = scoreSelectObj.color;
 
         }
         else if(e.key === "ArrowRight" && spyElement.className === "active" && idArrow === "right"){
@@ -332,9 +346,11 @@ const startGame = () => {
             spyArrow.classList.add("blink");
             textScore.textContent = score;
             textScore.style.color = scoreSelectObj.color;
-            scorePoint += scoreSelectObj.point;
             textScore.classList.add("textAnimate");
             hidden(textScore);
+            scorePoints += scoreSelectObj.point;
+            numberScore.textContent = scorePoints;
+            numberScore.style.color = scoreSelectObj.color;
 
         }
         else{
@@ -345,13 +361,15 @@ const startGame = () => {
             score = "MISS";
             textScore.textContent = score;
             textScore.style.color = scoreObjects[4].color;
-            scorePoint += scoreObjects[4].point;
             textScore.classList.add("textAnimate");
             hidden(textScore);
+            scorePoints += scoreObjects[4].point;
+            numberScore.textContent = scorePoints;
+            numberScore.style.color = scoreObjects[4].color;
 
         }
 
-        console.log(scorePoint);
+        //console.log(scorePoints);
 
     });
 

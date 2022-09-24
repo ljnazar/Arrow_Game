@@ -82,6 +82,10 @@ td>img {
   display: none;
 }
 
+.d-block{
+  display: block;
+}
+
 /* Perfect */
 #linea1{
   position: fixed;
