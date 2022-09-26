@@ -9,7 +9,7 @@ const initialScreen = `
 <div class="h-screen">
     <h1 class="mt-10 text-center text-white text-5xl font-bold">Pump it up!</h1>
     <video class="opacity-50 bg-z-index h-screen w-screen object-cover fixed inset-0" autoplay muted loop>
-        <source src="video/Initial_vid.mp4" type="video/mp4">
+        <source src="video/Initial_Vid.mp4" type="video/mp4">
     </video>
     <div class="h-1/2 flex flex-col items-center justify-center">
         <div class="mb-6">
