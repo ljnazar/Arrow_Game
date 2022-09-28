@@ -7,35 +7,39 @@ songInitial.loop = true;
 songInitial.volume = 0.5;
 
 const main = document.getElementById("main");
-const sectionNamePlayer = document.createElement("section");
+
+const sectionInitial = document.createElement("section");
+sectionInitial.className = "h-screen";
+
 const initialScreen = `
-<div class="h-screen">
     <h1 class="mt-10 text-center text-zinc-200 text-5xl font-bold">Arrow Game</h1>
     <video class="opacity-50 bg-z-index h-screen w-screen object-cover fixed inset-0" autoplay muted loop>
         <source src="video/Initial_Vid.mp4" type="video/mp4">
-    </video>
-    <div class="h-1/2 flex flex-col items-center justify-center">
-        <div class="mb-6">
-            <p id="text-volume" class="text-lg font-bold text-gray-700 mb-2">Select the volume to play</p>
-            <div class="flex">
-                <input id="slider-volume" class="w-44" type="range" min="0" max="1" value="0.5" step="0.1">
-                <span id="value-volume" class="text-base font-bold text-gray-700 ml-2"></span>
-            </div>
-        </div>
-        <div>
-            <button class="text-2xl font-semibold px-2 py-1" id="apply-button">Apply</button>
-        </div>
-        <div class="flex mb-6">
-            <label id="label-name" class=" text-3xl font-semibold mr-4" for="uname">player</label>
-            <input id="input-name" class="uppercase w-32 bg-transparent rounded-lg border-4 text-slate-200 font-semibold text-center" type="text" id="uname" name="name" maxlength="8" autocomplete="off">
-        </div>
-        <div>
-            <button class="text-3xl font-semibold px-2 py-1" id="join-button">Join</button>
+    </video>`;
+
+sectionInitial.innerHTML = initialScreen;
+main.append(sectionInitial);
+
+const contentInitial = document.createElement("div");
+contentInitial.className = "h-1/2 flex flex-col items-center justify-center";
+contentInitial.innerHTML = `
+    <div class="mb-6">
+        <p id="text-volume" class="text-lg font-bold text-gray-700 mb-2">Select the volume to play</p>
+        <div class="flex">
+            <input id="slider-volume" class="w-44" type="range" min="0" max="1" value="0.5" step="0.1">
+            <span id="value-volume" class="text-base font-bold text-gray-700 ml-2"></span>
         </div>
     </div>
-</div>`;
-sectionNamePlayer.innerHTML = initialScreen;
-main.append(sectionNamePlayer);
+    <div>
+        <button class="text-2xl font-semibold px-2 py-1" id="apply-button">Apply</button>
+    </div>`;
+sectionInitial.append(contentInitial);
+
+
+
+
+
+
 
 const textVolume = document.getElementById("text-volume");
 const sliderVolume = document.getElementById("slider-volume");
@@ -64,18 +68,18 @@ sliderVolume.addEventListener("change", function(event){
 });
 
 const labelName = document.getElementById("label-name");
-labelName.style.display = "none";
-labelName.style.color = "#3d3d3d";
+//labelName.style.display = "none";
+//labelName.style.color = "#3d3d3d";
 
 const inputName = document.getElementById("input-name");
-inputName.style.display = "none";
-inputName.style.border = "solid 4px #3d3d3d";
+//inputName.style.display = "none";
+//inputName.style.border = "solid 4px #3d3d3d";
 
 const joinButton = document.getElementById("join-button");
 joinButton.disabled = true;
-joinButton.style.display = "none";
-joinButton.style.border = "solid 4px #3d3d3d";
-joinButton.style.color = "#3d3d3d";
+//joinButton.style.display = "none";
+//joinButton.style.border = "solid 4px #3d3d3d";
+//joinButton.style.color = "#3d3d3d";
 
 inputName.addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
@@ -89,14 +93,30 @@ inputName.addEventListener("input", (e) => {
     joinButton.disabled = inputValue === "" ? true : false;
 });
 
+
+
+
+
 applyButton.addEventListener("click", () => {
-    textVolume.style.display = "none";
-    sliderVolume.style.display = "none";
-    valueVolume.style.display = "none";
-    applyButton.style.display = "none";
-    labelName.style.display = "block";
-    inputName.style.display = "block";
-    joinButton.style.display = "block";
+    contentInitial.innerHTML = `
+    <div class="flex mb-6">
+        <label id="label-name" class="d-none color-gray-extend text-3xl font-semibold mr-4" for="uname">player</label>
+        <input id="input-name" class="d-none border-gray-extend uppercase w-32 bg-transparent rounded-lg border-4 text-slate-200 font-semibold text-center" type="text" id="uname" name="name" maxlength="8" autocomplete="off">
+    </div>
+    <div>
+        <button class="d-none color-gray-extend border-gray-extend text-3xl font-semibold px-2 py-1" id="join-button">Join</button>
+    </div>`;
+    sectionInitial.append(contentInitial);
+    /*textVolume.classList.add("d-none");
+    sliderVolume.classList.add("d-none");
+    valueVolume.classList.add("d-none");
+    applyButton.classList.add("d-none");
+    labelName.classList.remove("d-none");
+    labelName.classList.add("d-block")
+    inputName.classList.remove("d-none");
+    inputName.classList.add("d-block")
+    joinButton.classList.remove("d-none");
+    joinButton.classList.add("d-block");*/
 });
 
 track1 = [

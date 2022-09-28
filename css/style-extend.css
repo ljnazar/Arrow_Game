@@ -3,22 +3,6 @@ nav ul a {
   position: relative;
 }
 
-/*nav ul a::after {
-  content: '';
-  position: absolute; 
-  bottom: 0;
-  height: 8px;
-  opacity: 0;
-  right: 0;
-  left: 0;
-  background: #CDF27E;
-  border: solid 2px #CDF27E;
-}
-
-nav ul a.active{
-  opacity: 1;
-}*/
-
 td>img {
   display:grid;
   font-size: 12rem;
@@ -84,6 +68,14 @@ td>img {
 
 .d-block{
   display: block;
+}
+
+.color-gray-extend{
+  color: #3d3d3d;
+}
+
+.border-gray-extend{
+  border: solid 4px #3d3d3d;
 }
 
 /* Perfect */
