@@ -2,36 +2,97 @@ const body = document.body;
 body.className = "overflow-y-hidden bg-neutral-700";
 //body.className = "bg-neutral-700";
 
+const songInitial = new Audio("../audio/Hans_Zimmer_Alan_Walker_Time_Edit.mp3");
+songInitial.loop = true;
+songInitial.volume = 0.5;
 
 const main = document.getElementById("main");
 const sectionNamePlayer = document.createElement("section");
 const initialScreen = `
 <div class="h-screen">
-    <h1 class="mt-10 text-center text-white text-5xl font-bold">Arrow Game</h1>
+    <h1 class="mt-10 text-center text-zinc-200 text-5xl font-bold">Arrow Game</h1>
     <video class="opacity-50 bg-z-index h-screen w-screen object-cover fixed inset-0" autoplay muted loop>
         <source src="video/Initial_Vid.mp4" type="video/mp4">
     </video>
     <div class="h-1/2 flex flex-col items-center justify-center">
         <div class="mb-6">
-            <label class="text-white text-3xl font-semibold mr-4" for="uname">player</label>
-            <input id="input-name" class="uppercase w-32 bg-transparent border-white border-dashed rounded-lg border-4 text-white text-center focus:border-solid hover:border-solid" type="text" id="uname" name="name" maxlength="6" autocomplete="off">
+            <p id="text-volume" class="text-lg font-bold text-gray-700 mb-2">Select the volume to play</p>
+            <div class="flex">
+                <input id="slider-volume" class="w-44" type="range" min="0" max="1" value="0.5" step="0.1">
+                <span id="value-volume" class="text-base font-bold text-gray-700 ml-2"></span>
+            </div>
         </div>
         <div>
-            <button class="text-white text-3xl font-semibold border-white border-solid border-4 px-2 py-1" id="joinButton">Join</button>
+            <button class="text-2xl font-semibold px-2 py-1" id="apply-button">Apply</button>
+        </div>
+        <div class="flex mb-6">
+            <label id="label-name" class=" text-3xl font-semibold mr-4" for="uname">player</label>
+            <input id="input-name" class="uppercase w-32 bg-transparent rounded-lg border-4 text-slate-200 font-semibold text-center" type="text" id="uname" name="name" maxlength="8" autocomplete="off">
+        </div>
+        <div>
+            <button class="text-3xl font-semibold px-2 py-1" id="join-button">Join</button>
         </div>
     </div>
 </div>`;
 sectionNamePlayer.innerHTML = initialScreen;
 main.append(sectionNamePlayer);
 
+const textVolume = document.getElementById("text-volume");
+const sliderVolume = document.getElementById("slider-volume");
+const valueVolume = document.getElementById("value-volume");
+
+const applyButton = document.getElementById("apply-button");
+applyButton.disabled = true;
+applyButton.style.border = "solid 4px #3d3d3d";
+applyButton.style.color = "#3d3d3d";
+
+let generalVolume = "";
+
+valueVolume.innerHTML = "50%";
+
+sliderVolume.addEventListener("change", function(event){
+
+    applyButton.disabled = false;
+
+    generalVolume = event.currentTarget.value;
+
+    valueVolume.innerHTML = generalVolume * 100 + "%";
+
+    songInitial.volume = generalVolume;
+    songInitial.play();
+            
+});
+
+const labelName = document.getElementById("label-name");
+labelName.style.display = "none";
+labelName.style.color = "#3d3d3d";
+
 const inputName = document.getElementById("input-name");
+inputName.style.display = "none";
+inputName.style.border = "solid 4px #3d3d3d";
+
+const joinButton = document.getElementById("join-button");
+//joinButton.disabled = true;
+joinButton.style.display = "none";
+joinButton.style.border = "solid 4px #3d3d3d";
+joinButton.style.color = "#3d3d3d";
+
+applyButton.addEventListener("click", () => {
+    textVolume.style.display = "none";
+    sliderVolume.style.display = "none";
+    valueVolume.style.display = "none";
+    applyButton.style.display = "none";
+    labelName.style.display = "block";
+    inputName.style.display = "block";
+    joinButton.style.display = "block";
+});
 
 let namePlayer = "";
 
 inputName.addEventListener("blur", (e) => {
     namePlayer = e.target.value;
+    console.log(e.target.value);
 });
-
 
 track1 = [
     0,1,0,0,
@@ -147,19 +208,27 @@ const red = "#ef4444";
 
 let scorePoints = 0;
 
+let songGame = new Audio("../audio/Miss_Monique_Eclipse_Edit.mp3");
+
 const startGame = () => {
+
+    songInitial.pause();
+    songInitial.currentTime = 0;
 
     sessionStorage.setItem("name", namePlayer);
     //console.log(sessionStorage.getItem("name"));
 
     sectionNamePlayer.remove();
 
+    songGame.play();
+    songGame.volume = 0.5;
+
     const sectionGame = document.createElement("section");
     sectionGame.className = "flex flex-col items-center";
-    const backgroundTrack1 = `
+    /*const backgroundTrack1 = `
     <video class="opacity-80 bg-z-index h-screen w-screen object-cover fixed inset-0" autoplay loop>
         <source src="video/Track_1.mp4" type="video/mp4">
-    </video>`;
+    </video>`;*/
     const arrowsFixed = `
         <nav class="fixed pt-10 z-0 flex justify-center">
             <ul id="spy-nav" class="flex">
@@ -374,7 +443,5 @@ const startGame = () => {
     });
 
 }
-
-const joinButton = document.getElementById("joinButton");
 
 joinButton.addEventListener("click", startGame);
