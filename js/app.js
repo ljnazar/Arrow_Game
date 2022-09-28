@@ -72,10 +72,22 @@ inputName.style.display = "none";
 inputName.style.border = "solid 4px #3d3d3d";
 
 const joinButton = document.getElementById("join-button");
-//joinButton.disabled = true;
+joinButton.disabled = true;
 joinButton.style.display = "none";
 joinButton.style.border = "solid 4px #3d3d3d";
 joinButton.style.color = "#3d3d3d";
+
+inputName.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      joinButton.click();
+    }
+});
+
+inputName.addEventListener("input", (e) => {
+    let inputValue = e.target.value;
+    joinButton.disabled = inputValue === "" ? true : false;
+});
 
 applyButton.addEventListener("click", () => {
     textVolume.style.display = "none";
@@ -85,13 +97,6 @@ applyButton.addEventListener("click", () => {
     labelName.style.display = "block";
     inputName.style.display = "block";
     joinButton.style.display = "block";
-});
-
-let namePlayer = "";
-
-inputName.addEventListener("blur", (e) => {
-    namePlayer = e.target.value;
-    console.log(e.target.value);
 });
 
 track1 = [
@@ -214,6 +219,8 @@ const startGame = () => {
 
     songInitial.pause();
     songInitial.currentTime = 0;
+
+    let namePlayer = inputName.value;
 
     sessionStorage.setItem("name", namePlayer);
     //console.log(sessionStorage.getItem("name"));
