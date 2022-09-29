@@ -624,10 +624,6 @@ video {
   margin-left: 1.5rem;
 }
 
-.block {
-  display: block;
-}
-
 .flex {
   display: flex;
 }
@@ -688,12 +684,12 @@ video {
   border-radius: 0.5rem;
 }
 
-.border-4 {
-  border-width: 4px;
-}
-
 .border {
   border-width: 1px;
+}
+
+.border-4 {
+  border-width: 4px;
 }
 
 .bg-neutral-700 {

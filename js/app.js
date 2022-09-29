@@ -20,9 +20,10 @@ const initialScreen = `
 sectionInitial.innerHTML = initialScreen;
 main.append(sectionInitial);
 
-const contentInitial = document.createElement("div");
-contentInitial.className = "h-1/2 flex flex-col items-center justify-center";
-contentInitial.innerHTML = `
+const divInitial = document.createElement("div");
+divInitial.className = "h-1/2 flex flex-col items-center justify-center";
+
+let contentInitial = `
     <div class="mb-6">
         <p id="text-volume" class="text-lg font-bold text-gray-700 mb-2">Select the volume to play</p>
         <div class="flex">
@@ -33,13 +34,10 @@ contentInitial.innerHTML = `
     <div>
         <button class="text-2xl font-semibold px-2 py-1" id="apply-button">Apply</button>
     </div>`;
-sectionInitial.append(contentInitial);
 
+divInitial.innerHTML = contentInitial;
 
-
-
-
-
+sectionInitial.append(divInitial);
 
 const textVolume = document.getElementById("text-volume");
 const sliderVolume = document.getElementById("slider-volume");
@@ -67,59 +65,57 @@ sliderVolume.addEventListener("change", function(event){
             
 });
 
-const labelName = document.getElementById("label-name");
-//labelName.style.display = "none";
-//labelName.style.color = "#3d3d3d";
-
-const inputName = document.getElementById("input-name");
-//inputName.style.display = "none";
-//inputName.style.border = "solid 4px #3d3d3d";
-
-const joinButton = document.getElementById("join-button");
-joinButton.disabled = true;
-//joinButton.style.display = "none";
-//joinButton.style.border = "solid 4px #3d3d3d";
-//joinButton.style.color = "#3d3d3d";
-
-inputName.addEventListener("keypress", function(event) {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      joinButton.click();
-    }
-});
-
-inputName.addEventListener("input", (e) => {
-    let inputValue = e.target.value;
-    joinButton.disabled = inputValue === "" ? true : false;
-});
-
-
-
-
+let inputName = "";
 
 applyButton.addEventListener("click", () => {
-    contentInitial.innerHTML = `
+
+    contentInitial = `
     <div class="flex mb-6">
-        <label id="label-name" class="d-none color-gray-extend text-3xl font-semibold mr-4" for="uname">player</label>
-        <input id="input-name" class="d-none border-gray-extend uppercase w-32 bg-transparent rounded-lg border-4 text-slate-200 font-semibold text-center" type="text" id="uname" name="name" maxlength="8" autocomplete="off">
+        <label class="color-gray-extend text-3xl font-semibold mr-4" for="uname">player</label>
+        <input id="input-name" class="border-gray-extend uppercase w-32 bg-transparent rounded-lg border-4 text-slate-200 font-semibold text-center" type="text" id="uname" name="name" maxlength="8" autocomplete="off">
     </div>
     <div>
-        <button class="d-none color-gray-extend border-gray-extend text-3xl font-semibold px-2 py-1" id="join-button">Join</button>
+        <button class="color-gray-extend border-gray-extend text-3xl font-semibold px-2 py-1" id="join-button">Join</button>
     </div>`;
-    sectionInitial.append(contentInitial);
-    /*textVolume.classList.add("d-none");
-    sliderVolume.classList.add("d-none");
-    valueVolume.classList.add("d-none");
-    applyButton.classList.add("d-none");
-    labelName.classList.remove("d-none");
-    labelName.classList.add("d-block")
-    inputName.classList.remove("d-none");
-    inputName.classList.add("d-block")
-    joinButton.classList.remove("d-none");
-    joinButton.classList.add("d-block");*/
+
+    divInitial.innerHTML = contentInitial;
+
+    inputName = document.getElementById("input-name");
+
+    const joinButton = document.getElementById("join-button");
+    joinButton.disabled = true;
+
+    inputName.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+        event.preventDefault();
+        joinButton.click();
+        }
+    });
+
+    inputName.addEventListener("input", (e) => {
+        let inputValue = e.target.value;
+        joinButton.disabled = inputValue === "" ? true : false;
+    });
+
+    joinButton.addEventListener("click", startGame);
+
 });
 
 track1 = [
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
     0,1,0,0,
     1,0,0,0,
     0,0,0,0,
@@ -245,7 +241,30 @@ const startGame = () => {
     sessionStorage.setItem("name", namePlayer);
     //console.log(sessionStorage.getItem("name"));
 
-    sectionNamePlayer.remove();
+    sectionInitial.remove();
+
+    let timerInterval
+    Swal.fire({
+        title: "Loading game",
+        html: "Will close in <b></b> milliseconds",
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: () => {
+            Swal.showLoading();
+            const b = Swal.getHtmlContainer().querySelector('b');
+            timerInterval = setInterval(() => {
+            b.textContent = Swal.getTimerLeft();
+            }, 100)
+        },
+        willClose: () => {
+            clearInterval(timerInterval);
+        }
+        }).then((result) => {
+        /* Read more about handling dismissals below */
+        if (result.dismiss === Swal.DismissReason.timer) {
+            console.log('I was closed by the timer');
+        }
+    });
 
     songGame.play();
     songGame.volume = 0.5;
@@ -470,5 +489,3 @@ const startGame = () => {
     });
 
 }
-
-joinButton.addEventListener("click", startGame);
