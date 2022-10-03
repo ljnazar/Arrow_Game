@@ -111,11 +111,6 @@ track1 = [
     0,0,0,0,
     0,0,0,0,
     0,0,0,0,
-    0,0,0,0,
-    0,0,0,0,
-    0,0,0,0,
-    0,0,0,0,
-    0,0,0,0,
     0,1,0,0,
     1,0,0,0,
     0,0,0,0,
@@ -156,6 +151,16 @@ track1 = [
     0,0,1,0,
     0,0,0,0,
     1,0,0,0,
+    1,0,0,0,
+    0,0,0,0,
+    0,1,0,0,
+    0,0,0,0,
+    0,1,0,0,
+    0,0,0,0,
+    1,0,0,0,
+    0,0,1,0,
+    0,0,0,0,
+    0,0,0,1,
     0,0,0,0,
     0,0,0,0,
     0,0,0,0,
@@ -243,31 +248,8 @@ const startGame = () => {
 
     sectionInitial.remove();
 
-    let timerInterval
-    Swal.fire({
-        title: "Loading game",
-        html: "Will close in <b></b> milliseconds",
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: () => {
-            Swal.showLoading();
-            const b = Swal.getHtmlContainer().querySelector('b');
-            timerInterval = setInterval(() => {
-            b.textContent = Swal.getTimerLeft();
-            }, 100)
-        },
-        willClose: () => {
-            clearInterval(timerInterval);
-        }
-        }).then((result) => {
-        /* Read more about handling dismissals below */
-        if (result.dismiss === Swal.DismissReason.timer) {
-            console.log('I was closed by the timer');
-        }
-    });
-
     songGame.play();
-    songGame.volume = 0.5;
+    songGame.volume = generalVolume;
 
     const sectionGame = document.createElement("section");
     sectionGame.className = "flex flex-col items-center";
@@ -402,70 +384,56 @@ const startGame = () => {
 
     sectionGame.append(numberScore);
 
-    const hidden = (element) => {
+    const hiddenTimer = (element) => {
+        element.classList.remove("d-none");
+        element.classList.add("d-block");
         setTimeout( () => {
+            element.classList.remove("d-block");
             element.classList.add("d-none");
           }, 250);
+    };
+
+    const textScore = document.createElement("h2");
+    textScore.className = "d-none text-shadow text-family z-20 fixed mx-auto top-1/3 font-bold text-7xl";
+    sectionGame.append(textScore);
+
+    const scoreRender = (score, scoreSelectObj) => {
+        textScore.textContent = score;
+        textScore.style.color = scoreSelectObj.color;
+        textScore.classList.add("textAnimate");
+        hiddenTimer(textScore);
+        scorePoints += scoreSelectObj.point;
+        numberScore.textContent = scorePoints;
+        numberScore.style.color = scoreSelectObj.color;
     };
 
     body.addEventListener("keydown", (e) => {
         //console.log(e);
         e.preventDefault();
 
-        ////// Ver forma de sacarlo fuera del evento //////
-        const textScore = document.createElement("h2");
-        textScore.className = "text-shadow text-family z-20 fixed mx-auto top-1/3 font-bold text-7xl";
-
-        sectionGame.append(textScore);
-        ///////////////////////////////////////////////////
-
         let scoreSelectObj = scoreObjects.find(obj => obj.score === score);
 
         if(e.key === "ArrowLeft" && spyElement.className === "active" && idArrow === "left"){
 
             spyArrow.classList.add("blink");
-            textScore.textContent = score;
-            textScore.style.color = scoreSelectObj.color;
-            textScore.classList.add("textAnimate");
-            hidden(textScore);
-            scorePoints += scoreSelectObj.point;
-            numberScore.textContent = scorePoints;
-            numberScore.style.color = scoreSelectObj.color;
+            scoreRender(score, scoreSelectObj);
         }
         else if(e.key === "ArrowUp" && spyElement.className === "active" && idArrow === "up"){
 
             spyArrow.classList.add("blink");
-            textScore.textContent = score;;
-            textScore.style.color = scoreSelectObj.color;
-            textScore.classList.add("textAnimate");
-            hidden(textScore);
-            scorePoints += scoreSelectObj.point;
-            numberScore.textContent = scorePoints;
-            numberScore.style.color = scoreSelectObj.color;
+            scoreRender(score, scoreSelectObj);
 
         }
         else if(e.key === "ArrowDown" && spyElement.className === "active" && idArrow === "down"){
 
             spyArrow.classList.add("blink");
-            textScore.textContent = score;
-            textScore.style.color = scoreSelectObj.color;
-            textScore.classList.add("textAnimate");
-            hidden(textScore);
-            scorePoints += scoreSelectObj.point;
-            numberScore.textContent = scorePoints;
-            numberScore.style.color = scoreSelectObj.color;
+            scoreRender(score, scoreSelectObj);
 
         }
         else if(e.key === "ArrowRight" && spyElement.className === "active" && idArrow === "right"){
 
             spyArrow.classList.add("blink");
-            textScore.textContent = score;
-            textScore.style.color = scoreSelectObj.color;
-            textScore.classList.add("textAnimate");
-            hidden(textScore);
-            scorePoints += scoreSelectObj.point;
-            numberScore.textContent = scorePoints;
-            numberScore.style.color = scoreSelectObj.color;
+            scoreRender(score, scoreSelectObj);
 
         }
         else{
@@ -474,18 +442,9 @@ const startGame = () => {
             //body.style.backgroundColor = red;
 
             score = "MISS";
-            textScore.textContent = score;
-            textScore.style.color = scoreObjects[4].color;
-            textScore.classList.add("textAnimate");
-            hidden(textScore);
-            scorePoints += scoreObjects[4].point;
-            numberScore.textContent = scorePoints;
-            numberScore.style.color = scoreObjects[4].color;
+            scoreSelectObj = scoreObjects[4];
+            scoreRender(score, scoreSelectObj);
 
         }
-
-        //console.log(scorePoints);
-
     });
-
 }
