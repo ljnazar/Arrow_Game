@@ -2,11 +2,11 @@ const body = document.body;
 body.className = "overflow-y-hidden bg-neutral-700";
 //body.className = "bg-neutral-700";
 
+const main = document.getElementById("main");
+
 const songInitial = new Audio("../audio/Hans_Zimmer_Alan_Walker_Time_Edit.mp3");
 songInitial.loop = true;
 songInitial.volume = 0.5;
-
-const main = document.getElementById("main");
 
 const sectionInitial = document.createElement("section");
 sectionInitial.className = "h-screen";
@@ -62,7 +62,7 @@ sliderVolume.addEventListener("change", function(event){
 
     songInitial.volume = generalVolume;
     songInitial.play();
-            
+
 });
 
 let inputName = "";
@@ -217,82 +217,12 @@ const contentTable = (sectionGame) => {
 let spyElement = "";
 let spyArrow = "";
 let idArrow = "";
-let heightScreen = window.innerHeight;
+let score = "";
 
-let marginPerfect = `-35px 0px ${125 - heightScreen}px 0px`;
-let marginGreat = `-25px 0px ${135 - heightScreen}px 0px`;
-let marginGood = `-15px 0px ${145 - heightScreen}px 0px`;
-let marginBad = `-5px 0px ${155 - heightScreen}px 0px`;
-let marginMiss = `0px 0px 0px 0px`;
-
-/* Color palette */
-const blue = "#3b82f6";
-const green = "#22c55e";
-const yellow = "#eab308";
-const violet = "#d946ef";
-const red = "#ef4444";
-
-let scorePoints = 0;
-
-let songGame = new Audio("../audio/Miss_Monique_Eclipse_Edit.mp3");
-
-const startGame = () => {
-
-    songInitial.pause();
-    songInitial.currentTime = 0;
-
-    let namePlayer = inputName.value;
-
-    sessionStorage.setItem("name", namePlayer);
-    //console.log(sessionStorage.getItem("name"));
-
-    sectionInitial.remove();
-
-    songGame.play();
-    songGame.volume = generalVolume;
-
-    const sectionGame = document.createElement("section");
-    sectionGame.className = "flex flex-col items-center";
-    /*const backgroundTrack1 = `
-    <video class="opacity-80 bg-z-index h-screen w-screen object-cover fixed inset-0" autoplay loop>
-        <source src="video/Track_1.mp4" type="video/mp4">
-    </video>`;*/
-    const arrowsFixed = `
-        <nav class="fixed pt-10 z-0 flex justify-center">
-            <ul id="spy-nav" class="flex">
-                <li><a href="#left">${arrowLeft}</a></li>
-                <li><a href="#up">${arrowUp}</a></li>
-                <li><a href="#down">${arrowDown}</a></li>
-                <li><a href="#right">${arrowRight}</a></li>
-            </ul>
-        </nav>`;
-    const lines = `
-        <!-- Perfect -->
-        <div id="linea1"></div>
-        <div id="linea2"></div>
-        <!-- Great -->
-        <div id="linea3"></div>
-        <div id="linea4"></div>
-        <!-- Good -->
-        <div id="linea5"></div>
-        <div id="linea6"></div>
-        <!-- Bad -->
-        <div id="linea7"></div>
-        <div id="linea8"></div>
-        <!-- Miss -->
-        <div id="linea9"></div>
-        <div id="linea10"></div>`;
-    //sectionGame.innerHTML = backgroundTrack1 + arrowsFixed + lines;
-    sectionGame.innerHTML = arrowsFixed + lines;
-
-    main.append(sectionGame);
-
-    contentTable(sectionGame);
+const intersectionObserver = () => {
 
     const spyNav = document.getElementById("spy-nav");
     const arrows = [...document.querySelectorAll("td > img")];
-
-    let score = "";
 
     const spyItem = (entries, observer) => {
         entries.forEach(entry => {
@@ -363,11 +293,91 @@ const startGame = () => {
         observerBad.observe(arrow);
         observerMiss.observe(arrow);
     });
+};
 
-    const pageScroll = () => {
-        window.scrollBy(0,2);
-        scrolldelay = setTimeout(pageScroll,1);
-    };
+let heightScreen = window.innerHeight;
+
+let marginPerfect = `-35px 0px ${125 - heightScreen}px 0px`;
+let marginGreat = `-25px 0px ${135 - heightScreen}px 0px`;
+let marginGood = `-15px 0px ${145 - heightScreen}px 0px`;
+let marginBad = `-5px 0px ${155 - heightScreen}px 0px`;
+let marginMiss = `0px 0px 0px 0px`;
+
+/* Color palette */
+const blue = "#3b82f6";
+const green = "#22c55e";
+const yellow = "#eab308";
+const violet = "#d946ef";
+const red = "#ef4444";
+
+let scorePoints = 0;
+
+const songGame = new Audio("../audio/Miss_Monique_Eclipse_Edit.mp3");
+
+const pageScroll = () => {
+    window.scrollBy(0,2);
+    scrolldelay = setTimeout(pageScroll,1);
+};
+
+const startGame = () => {
+
+    songInitial.pause();
+    songInitial.currentTime = 0;
+
+    let namePlayer = inputName.value;
+
+    sessionStorage.setItem("name", namePlayer);
+    //console.log(sessionStorage.getItem("name"));
+
+    sectionInitial.remove();
+
+    songGame.play();
+    songGame.volume = generalVolume;
+
+    const sectionGame = document.createElement("section");
+    sectionGame.className = "flex flex-col items-center";
+    /*const backgroundTrack1 = `
+    <video class="opacity-80 bg-z-index h-screen w-screen object-cover fixed inset-0" autoplay loop>
+        <source src="video/Track_1.mp4" type="video/mp4">
+    </video>`;*/
+    const arrowsFixed = `
+        <nav class="fixed pt-10 z-0 flex justify-center">
+            <ul id="spy-nav" class="flex">
+                <li><a href="#left">${arrowLeft}</a></li>
+                <li><a href="#up">${arrowUp}</a></li>
+                <li><a href="#down">${arrowDown}</a></li>
+                <li><a href="#right">${arrowRight}</a></li>
+            </ul>
+        </nav>`;
+    const lines = `
+        <!-- Perfect -->
+        <div id="linea1"></div>
+        <div id="linea2"></div>
+        <!-- Great -->
+        <div id="linea3"></div>
+        <div id="linea4"></div>
+        <!-- Good -->
+        <div id="linea5"></div>
+        <div id="linea6"></div>
+        <!-- Bad -->
+        <div id="linea7"></div>
+        <div id="linea8"></div>
+        <!-- Miss -->
+        <div id="linea9"></div>
+        <div id="linea10"></div>`;
+    //sectionGame.innerHTML = backgroundTrack1 + arrowsFixed + lines;
+    sectionGame.innerHTML = arrowsFixed + lines;
+
+    main.append(sectionGame);
+
+    contentTable(sectionGame);
+
+    songGame.addEventListener("ended", () => {
+        sectionGame.remove();
+        console.log("Start function to render scoreTable");
+    });
+
+    intersectionObserver();
 
     pageScroll();
 
