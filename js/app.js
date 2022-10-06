@@ -412,17 +412,16 @@ const pageScroll = () => {
 
 const getData = async () => {
     try{
-        let array = [];
         const response = await fetch("../table-score.json");
         const data = await response.json();
 
-        let s = "";
-        data.forEach( x => {s += `${x.name} ------------------------------------------- ${x.score} <br>`});
+        let scoreTable = "";
+        data.forEach( x => {scoreTable += `${x.name} ------------------------------------------- ${x.score} <br>`});
 
         Swal.fire({
             width: 500,
             title: 'Score table',
-            html: s,
+            html: scoreTable,
             padding: '1em',
             color: '#716add',
             backdrop: 'rgba(0,0,123,0.4)'
