@@ -101,64 +101,50 @@ applyButton.addEventListener("click", () => {
 
 });
 
-track1 = [
-    0,0,0,0,
-    0,0,0,0,
-    0,0,0,0,
-    0,0,0,0,
+
+// Test //
+/*let track1 = [];
+const asd = () => {
+    for (let i = 0; i < 1000; i++) {
+        if(i % 4 === 0){
+            track1.push(1);
+        }
+        track1.push(0);
+        track1.push(0);
+        track1.push(0);
+    }
+    track1.push(1);
+    track1.push(1);
+    track1.push(1);
+    track1.push(1);
+}
+asd();*/
+
+const track1 = [
     0,0,0,0,
     0,0,0,0,
     0,0,0,0,
     0,0,0,0,
     0,0,0,0,
     0,1,0,0,
-    1,0,0,0,
-    0,0,0,0,
-    0,0,1,0,
-    0,0,0,0,
-    1,0,0,0,
-    0,0,0,1,
-    0,0,0,0,
-    0,0,0,0,
-    0,0,0,1,
-    0,1,0,0,
-    0,0,0,1,
-    0,0,0,0,
-    1,0,0,0,
-    0,0,0,1,
-    0,0,0,0,
-    0,0,0,1,
-    0,0,1,0,
-    0,0,0,0,
-    0,0,0,1,
-    0,1,0,0,
-    0,0,0,0,
-    0,0,0,0,
-    1,0,0,0,
     0,0,0,0,
     0,0,0,0,
     0,0,0,0,
-    0,1,0,0,
     0,0,0,0,
-    0,1,0,0,
     0,0,0,0,
     0,0,1,0,
     0,0,0,0,
     0,0,0,0,
     0,0,0,0,
-    0,1,0,0,
-    0,0,0,0,
-    0,0,1,0,
     0,0,0,0,
     1,0,0,0,
-    1,0,0,0,
     0,0,0,0,
-    0,1,0,0,
+    0,0,0,0,
     0,0,0,0,
     0,1,0,0,
     0,0,0,0,
-    1,0,0,0,
-    0,0,1,0,
+    0,0,0,0,
+    0,0,0,0,
     0,0,0,0,
     0,0,0,1,
     0,0,0,0,
@@ -169,8 +155,110 @@ track1 = [
     0,0,0,0,
     0,0,0,0,
     0,0,0,0,
+    0,0,1,0,
     0,0,0,0,
-    0,0,0,0];
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    1,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,1,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    1,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,1,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,1,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    1,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,1,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,1,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,1,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    1,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    1,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,1,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    1,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,1,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    1,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,1,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,1,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    1,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,1,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+];
 
 const arrowLeft = `<img id="left" src="img/left-arrow.svg" alt="arrow-up" class="h-20 mx-2"></img>`;
 const arrowUp = `<img id="up" src="img/up-arrow.svg" alt="arrow-up" class="h-20 mx-2">`;
@@ -242,6 +330,9 @@ const intersectionObserver = () => {
                 if (!entry.isIntersecting) return;
                 //body.style.backgroundColor = blue;
                 score = "PERFECT";
+
+                console.log(songGame.currentTime);
+
             }
             else if(observer.rootMargin === marginGreat){
                 spyElement.classList.add("active");
@@ -312,11 +403,60 @@ const red = "#ef4444";
 
 let scorePoints = 0;
 
-const songGame = new Audio("../audio/Miss_Monique_Eclipse_Edit.mp3");
+const songGame = new Audio("../audio/Boris_Brejcha_To_The_Moon_And_Back_feat_Ginger_Edit_Short.mp3");
 
 const pageScroll = () => {
     window.scrollBy(0,2);
     scrolldelay = setTimeout(pageScroll,1);
+};
+
+const getData = async () => {
+    try{
+        let array = [];
+        const response = await fetch("../table-score.json");
+        const data = await response.json();
+
+        let s = "";
+        data.forEach( x => {s += `${x.name} ------------------------------------------- ${x.score} <br>`});
+
+        Swal.fire({
+            width: 500,
+            title: 'Score table',
+            html: s,
+            padding: '1em',
+            color: '#716add',
+            backdrop: 'rgba(0,0,123,0.4)'
+          });
+
+    } catch (e) {
+        console.error(e);
+    } finally {
+        console.log("Async function end");
+    }
+};
+
+const renderSectionPosition = () => {
+    let timerInterval
+    Swal.fire({
+        title: "Loading results",
+        html: "<b></b>",
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: () => {
+            Swal.showLoading();
+            const b = Swal.getHtmlContainer().querySelector('b');
+            timerInterval = setInterval(() => {
+                b.textContent = Swal.getTimerLeft();
+            }, 100);
+        },
+        willClose: () => {
+            clearInterval(timerInterval);
+        }
+        }).then((result) => {
+        if (result.dismiss === Swal.DismissReason.timer) {
+            getData();
+        }
+    });
 };
 
 const startGame = () => {
@@ -373,8 +513,11 @@ const startGame = () => {
     contentTable(sectionGame);
 
     songGame.addEventListener("ended", () => {
+
         sectionGame.remove();
-        console.log("Start function to render scoreTable");
+
+        renderSectionPosition();
+
     });
 
     intersectionObserver();
@@ -403,6 +546,44 @@ const startGame = () => {
           }, 250);
     };
 
+    // Performance Test //
+    /*const hiddenTimer = (element) => {
+        element.classList.remove("d-none");
+        element.classList.add("d-block");
+        setTimeout( () => {
+            element.style.fontSize = "3.9rem"
+          }, 25);
+          setTimeout( () => {
+            element.style.fontSize = "4rem"
+          }, 50);
+          setTimeout( () => {
+            element.style.fontSize = "4.1rem"
+          }, 75);
+          setTimeout( () => {
+            element.style.fontSize = "4.2rem"
+          }, 100);
+          setTimeout( () => {
+            element.style.fontSize = "4.3rem"
+          }, 125);
+          setTimeout( () => {
+            element.style.fontSize = "4.5rem"
+          }, 150);
+          setTimeout( () => {
+            element.style.fontSize = "4.4rem"
+          }, 175);
+          setTimeout( () => {
+            element.style.fontSize = "4.2rem"
+          }, 200);
+          setTimeout( () => {
+            element.style.fontSize = "4rem"
+          }, 225);
+        setTimeout( () => {
+            element.style.fontSize = "3.75rem"
+            element.classList.remove("d-block");
+            element.classList.add("d-none");
+          }, 250);
+    };*/
+
     const textScore = document.createElement("h2");
     textScore.className = "d-none text-shadow text-family z-20 fixed mx-auto top-1/3 font-bold text-7xl";
     sectionGame.append(textScore);
@@ -420,6 +601,8 @@ const startGame = () => {
     body.addEventListener("keydown", (e) => {
         //console.log(e);
         e.preventDefault();
+
+        console.log(`Punchi: ${songGame.currentTime}`);
 
         let scoreSelectObj = scoreObjects.find(obj => obj.score === score);
 
