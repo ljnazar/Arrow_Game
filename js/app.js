@@ -1,6 +1,6 @@
 const body = document.body;
-body.className = "overflow-y-hidden bg-neutral-700";
-//body.className = "bg-neutral-700";
+//body.className = "overflow-y-hidden bg-neutral-700";
+body.className = "bg-neutral-700";
 
 const main = document.getElementById("main");
 
@@ -8,11 +8,13 @@ const songInitial = new Audio("../audio/Hans_Zimmer_Alan_Walker_Time_Edit.mp3");
 songInitial.loop = true;
 songInitial.volume = 0.5;
 
-let namePlayer = "";
+let namePlayer;
 
-let sectionInitial = "";
+let sectionInitial;
 
-let generalVolume = "";
+let generalVolume;
+
+let songGame;
 
 const renderInitialScreen = () => {
 
@@ -100,6 +102,8 @@ const renderInitialScreen = () => {
             namePlayer = e.target.value;
             joinButton.disabled = namePlayer === "" ? true : false;
         });
+
+        songGame = new Audio("../audio/Boris_Brejcha_To_The_Moon_And_Back_feat_Ginger_Edit_Short.mp3");
 
         joinButton.addEventListener("click", startGame);
 
@@ -277,7 +281,7 @@ const renderTableArrows = (sectionGame) => {
     let mainTable = document.createElement("table");
     mainTable.className = "absolute top-full z-10";
     sectionGame.append(mainTable);
-    let rowTable = "";
+    let rowTable;
     let aux = "";
     for(const arrow of track1){
         if(count === 0){
@@ -309,10 +313,10 @@ const renderTableArrows = (sectionGame) => {
     }
 };
 
-let spyElement = "";
-let spyArrow = "";
-let idArrow = "";
-let score = "";
+let spyElement;
+let spyArrow;
+let idArrow;
+let score;
 
 const intersectionObserver = () => {
 
@@ -410,8 +414,6 @@ const red = "#ef4444";
 
 let scorePoints = 0;
 
-//const songGame = new Audio("../audio/Boris_Brejcha_To_The_Moon_And_Back_feat_Ginger_Edit_Short.mp3");
-
 const pageScroll = () => {
     window.scrollBy(0,2);
     scrolldelay = setTimeout(pageScroll,1);
@@ -477,8 +479,6 @@ const startGame = () => {
     //console.log(sessionStorage.getItem("name"));
 
     sectionInitial.remove();
-
-    const songGame = new Audio("../audio/Boris_Brejcha_To_The_Moon_And_Back_feat_Ginger_Edit_Short.mp3");
 
     songGame.play();
     songGame.volume = generalVolume;
