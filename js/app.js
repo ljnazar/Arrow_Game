@@ -8,98 +8,105 @@ const songInitial = new Audio("../audio/Hans_Zimmer_Alan_Walker_Time_Edit.mp3");
 songInitial.loop = true;
 songInitial.volume = 0.5;
 
-const sectionInitial = document.createElement("section");
-sectionInitial.className = "h-screen";
+let namePlayer = "";
 
-const initialScreen = `
-    <h1 class="mt-10 text-center text-zinc-200 text-5xl font-bold">Arrow Game</h1>
-    <video class="opacity-50 bg-z-index h-screen w-screen object-cover fixed inset-0" autoplay muted loop>
-        <source src="video/Initial_Vid.mp4" type="video/mp4">
-    </video>`;
-
-sectionInitial.innerHTML = initialScreen;
-main.append(sectionInitial);
-
-const divInitial = document.createElement("div");
-divInitial.className = "h-1/2 flex flex-col items-center justify-center";
-
-let contentInitial = `
-    <div class="mb-6">
-        <p id="text-volume" class="text-lg font-bold text-gray-700 mb-2">Select the volume to play</p>
-        <div class="flex">
-            <input id="slider-volume" class="w-44" type="range" min="0" max="1" value="0.5" step="0.1">
-            <span id="value-volume" class="text-base font-bold text-gray-700 ml-2"></span>
-        </div>
-    </div>
-    <div>
-        <button class="text-2xl font-semibold px-2 py-1" id="apply-button">Apply</button>
-    </div>`;
-
-divInitial.innerHTML = contentInitial;
-
-sectionInitial.append(divInitial);
-
-const textVolume = document.getElementById("text-volume");
-const sliderVolume = document.getElementById("slider-volume");
-const valueVolume = document.getElementById("value-volume");
-
-const applyButton = document.getElementById("apply-button");
-applyButton.disabled = true;
-applyButton.style.border = "solid 4px #3d3d3d";
-applyButton.style.color = "#3d3d3d";
+let sectionInitial = "";
 
 let generalVolume = "";
 
-valueVolume.innerHTML = "50%";
+const renderInitialScreen = () => {
 
-sliderVolume.addEventListener("change", function(event){
+    sectionInitial = document.createElement("section");
+    sectionInitial.className = "h-screen";
 
-    applyButton.disabled = false;
+    const initialScreen = `
+        <h1 class="mt-10 text-center text-zinc-200 text-5xl font-bold">Arrow Game</h1>
+        <video class="opacity-50 bg-z-index h-screen w-screen object-cover fixed inset-0" autoplay muted loop>
+            <source src="video/Initial_Vid.mp4" type="video/mp4">
+        </video>`;
 
-    generalVolume = event.currentTarget.value;
+    sectionInitial.innerHTML = initialScreen;
+    main.append(sectionInitial);
 
-    valueVolume.innerHTML = generalVolume * 100 + "%";
+    const divInitial = document.createElement("div");
+    divInitial.className = "h-1/2 flex flex-col items-center justify-center";
 
-    songInitial.volume = generalVolume;
-    songInitial.play();
-
-});
-
-let inputName = "";
-
-applyButton.addEventListener("click", () => {
-
-    contentInitial = `
-    <div class="flex mb-6">
-        <label class="color-gray-extend text-3xl font-semibold mr-4" for="uname">player</label>
-        <input id="input-name" class="border-gray-extend uppercase w-32 bg-transparent rounded-lg border-4 text-slate-200 font-semibold text-center" type="text" id="uname" name="name" maxlength="8" autocomplete="off">
-    </div>
-    <div>
-        <button class="color-gray-extend border-gray-extend text-3xl font-semibold px-2 py-1" id="join-button">Join</button>
-    </div>`;
+    let contentInitial = `
+        <div class="mb-6">
+            <p id="text-volume" class="text-lg font-bold text-gray-700 mb-2">Select the volume to play</p>
+            <div class="flex">
+                <input id="slider-volume" class="w-44" type="range" min="0" max="1" value="0.5" step="0.1">
+                <span id="value-volume" class="text-base font-bold text-gray-700 ml-2"></span>
+            </div>
+        </div>
+        <div>
+            <button class="text-2xl font-semibold px-2 py-1" id="apply-button">Apply</button>
+        </div>`;
 
     divInitial.innerHTML = contentInitial;
 
-    inputName = document.getElementById("input-name");
+    sectionInitial.append(divInitial);
 
-    const joinButton = document.getElementById("join-button");
-    joinButton.disabled = true;
+    //const textVolume = document.getElementById("text-volume");
+    const sliderVolume = document.getElementById("slider-volume");
+    const valueVolume = document.getElementById("value-volume");
 
-    inputName.addEventListener("keypress", function(event) {
-        if (event.key === "Enter") {
-        event.preventDefault();
-        joinButton.click();
-        }
+    const applyButton = document.getElementById("apply-button");
+    applyButton.disabled = true;
+    applyButton.style.border = "solid 4px #3d3d3d";
+    applyButton.style.color = "#3d3d3d";
+
+    valueVolume.innerHTML = "50%";
+
+    sliderVolume.addEventListener("change", function(event){
+
+        applyButton.disabled = false;
+
+        generalVolume = event.currentTarget.value;
+
+        valueVolume.innerHTML = generalVolume * 100 + "%";
+
+        songInitial.volume = generalVolume;
+        songInitial.play();
+
     });
 
-    inputName.addEventListener("input", (e) => {
-        let inputValue = e.target.value;
-        joinButton.disabled = inputValue === "" ? true : false;
+    applyButton.addEventListener("click", () => {
+
+        contentInitial = `
+        <div class="flex mb-6">
+            <label class="color-gray-extend text-3xl font-semibold mr-4" for="uname">player</label>
+            <input id="input-name" class="border-gray-extend uppercase w-32 bg-transparent rounded-lg border-4 text-slate-200 font-semibold text-center" type="text" id="uname" name="name" maxlength="8" autocomplete="off">
+        </div>
+        <div>
+            <button class="color-gray-extend border-gray-extend text-3xl font-semibold px-2 py-1" id="join-button">Join</button>
+        </div>`;
+
+        divInitial.innerHTML = contentInitial;
+
+        let inputName = document.getElementById("input-name");
+
+        const joinButton = document.getElementById("join-button");
+        joinButton.disabled = true;
+
+        inputName.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+            event.preventDefault();
+            joinButton.click();
+            }
+        });
+
+        inputName.addEventListener("input", (e) => {
+            namePlayer = e.target.value;
+            joinButton.disabled = namePlayer === "" ? true : false;
+        });
+
+        joinButton.addEventListener("click", startGame);
+
     });
+}
 
-    joinButton.addEventListener("click", startGame);
-
-});
+renderInitialScreen();
 
 
 // Test //
@@ -265,7 +272,7 @@ const arrowUp = `<img id="up" src="img/up-arrow.svg" alt="arrow-up" class="h-20 
 const arrowDown = `<img id="down" src="img/down-arrow.svg" alt="arrow-down" class="h-20 mx-2">`;
 const arrowRight = `<img id="right" src="img/right-arrow.svg" alt="arrow-right" class="h-20 mx-2">`;
 
-const contentTable = (sectionGame) => {
+const renderTableArrows = (sectionGame) => {
     let count = 0;
     let mainTable = document.createElement("table");
     mainTable.className = "absolute top-full z-10";
@@ -403,7 +410,7 @@ const red = "#ef4444";
 
 let scorePoints = 0;
 
-const songGame = new Audio("../audio/Boris_Brejcha_To_The_Moon_And_Back_feat_Ginger_Edit_Short.mp3");
+//const songGame = new Audio("../audio/Boris_Brejcha_To_The_Moon_And_Back_feat_Ginger_Edit_Short.mp3");
 
 const pageScroll = () => {
     window.scrollBy(0,2);
@@ -450,25 +457,28 @@ const renderSectionPosition = () => {
         },
         willClose: () => {
             clearInterval(timerInterval);
+            location.reload();
+            //renderInitialScreen();
         }
-        }).then((result) => {
+    }).then((result) => {
         if (result.dismiss === Swal.DismissReason.timer) {
             getData();
         }
-    });
+    })
 };
+
 
 const startGame = () => {
 
     songInitial.pause();
     songInitial.currentTime = 0;
 
-    let namePlayer = inputName.value;
-
-    sessionStorage.setItem("name", namePlayer);
+    sessionStorage.setItem("name", namePlayer.toUpperCase());
     //console.log(sessionStorage.getItem("name"));
 
     sectionInitial.remove();
+
+    const songGame = new Audio("../audio/Boris_Brejcha_To_The_Moon_And_Back_feat_Ginger_Edit_Short.mp3");
 
     songGame.play();
     songGame.volume = generalVolume;
@@ -509,7 +519,7 @@ const startGame = () => {
 
     main.append(sectionGame);
 
-    contentTable(sectionGame);
+    renderTableArrows(sectionGame);
 
     songGame.addEventListener("ended", () => {
 
