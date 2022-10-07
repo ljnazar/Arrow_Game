@@ -1,6 +1,6 @@
 const body = document.body;
-//body.className = "overflow-y-hidden bg-neutral-700";
-body.className = "bg-neutral-700";
+body.className = "overflow-y-hidden bg-neutral-700";
+//body.className = "bg-neutral-700";
 
 const main = document.getElementById("main");
 
@@ -317,6 +317,7 @@ let spyElement;
 let spyArrow;
 let idArrow;
 let score;
+let handleKeyboard;
 
 const intersectionObserver = () => {
 
@@ -459,8 +460,9 @@ const renderSectionPosition = () => {
         },
         willClose: () => {
             clearInterval(timerInterval);
-            location.reload();
-            //renderInitialScreen();
+            //location.reload();
+            body.removeEventListener("keydown", handleKeyboard);
+            renderInitialScreen();
         }
     }).then((result) => {
         if (result.dismiss === Swal.DismissReason.timer) {
@@ -607,7 +609,7 @@ const startGame = () => {
         numberScore.style.color = scoreSelectObj.color;
     };
 
-    body.addEventListener("keydown", (e) => {
+    handleKeyboard =  (e) => {
         //console.log(e);
         e.preventDefault();
 
@@ -648,5 +650,7 @@ const startGame = () => {
             scoreRender(score, scoreSelectObj);
 
         }
-    });
+    }
+
+    body.addEventListener("keydown", handleKeyboard);
 }
