@@ -413,16 +413,19 @@ const yellow = "#eab308";
 const violet = "#d946ef";
 const red = "#ef4444";
 
-let scorePoints = 0;
-
-const pageScroll = () => {
-    window.scrollBy(0,2);
-    scrolldelay = setTimeout(pageScroll,1);
-};
+let perfectCount = 0;
+let greatCount = 0;
+let goodCount = 0;
+let badCount = 0;
+let missCount = 0;
+let maxCombo = 1;
+let totalScore = 0;
+let finalScore = 0;
 
 const getData = async () => {
     try{
-        const response = await fetch("../table-score.json");
+        //const response = await fetch("../table-score.json");
+        const response = await fetch("https://express-ljnazar.vercel.app/api/getData");
         const data = await response.json();
 
         let scoreTable = "";
@@ -461,8 +464,6 @@ const renderSectionPosition = () => {
         willClose: () => {
             clearInterval(timerInterval);
             //location.reload();
-            body.removeEventListener("keydown", handleKeyboard);
-            renderInitialScreen();
         }
     }).then((result) => {
         if (result.dismiss === Swal.DismissReason.timer) {
@@ -527,11 +528,18 @@ const startGame = () => {
 
         sectionGame.remove();
 
+        sessionStorage.setItem("totalScore", totalScore);
+
         renderSectionPosition();
 
     });
 
     intersectionObserver();
+
+    const pageScroll = () => {
+        window.scrollBy(0,2);
+        scrolldelay = setTimeout(pageScroll,1);
+    };
 
     pageScroll();
 
@@ -543,10 +551,10 @@ const startGame = () => {
         {score: "MISS", color: red, point: -50}
     ];
 
-    const numberScore = document.createElement("h2");
+    /*const numberScore = document.createElement("h2");
     numberScore.className = "text-shadow text-family z-20 fixed mt-12 ml-6 self-start font-bold text-7xl";
 
-    sectionGame.append(numberScore);
+    sectionGame.append(numberScore);*/
 
     const hiddenTimer = (element) => {
         element.classList.remove("d-none");
@@ -599,21 +607,39 @@ const startGame = () => {
     textScore.className = "d-none text-shadow text-family z-20 fixed mx-auto top-1/3 font-bold text-7xl";
     sectionGame.append(textScore);
 
+    let preScore;
+
     const scoreRender = (score, scoreSelectObj) => {
         textScore.textContent = score;
         textScore.style.color = scoreSelectObj.color;
         textScore.classList.add("textAnimate");
         hiddenTimer(textScore);
-        scorePoints += scoreSelectObj.point;
-        numberScore.textContent = scorePoints;
-        numberScore.style.color = scoreSelectObj.color;
+        totalScore += scoreSelectObj.point;
+        if(score === "PERFECT"){
+            perfectCount += 1;
+        }else if(score === "GREAT"){
+            greatCount += 1;
+        }else if(score === "GOOD"){
+            goodCount += 1;
+        }else if(score === "BAD"){
+            badCount += 1;
+        }else if(score === "MISS"){
+            missCount += 1;
+        }
+        if(preScore && score === "PERFECT"){
+            maxCombo += 1;
+        }
+        preScore = score;
+        
+        //numberScore.textContent = totalScore;
+        //numberScore.style.color = scoreSelectObj.color;
     };
 
     handleKeyboard =  (e) => {
         //console.log(e);
         e.preventDefault();
 
-        console.log(`Punchi: ${songGame.currentTime}`);
+        //console.log(`Punchi: ${songGame.currentTime}`);
 
         let scoreSelectObj = scoreObjects.find(obj => obj.score === score);
 
@@ -650,7 +676,18 @@ const startGame = () => {
             scoreRender(score, scoreSelectObj);
 
         }
+
+        console.log("---------------");
+        console.log(perfectCount);
+        console.log(greatCount);
+        console.log(goodCount);
+        console.log(badCount);
+        console.log(missCount);
+        console.log(maxCombo);
+        console.log(totalScore);
+
     }
 
     body.addEventListener("keydown", handleKeyboard);
+
 }
