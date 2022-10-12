@@ -429,7 +429,8 @@ const getData = async () => {
         const data = await response.json();
 
         let scoreTable = "";
-        data.forEach( x => {scoreTable += `${x.name} ------------------------------------------- ${x.score} <br>`});
+        //data.forEach( x => {scoreTable += `${x.name} ------------------------------------------- ${x.score} <br>`});
+        scoreTable = data;
 
         Swal.fire({
             width: 500,
