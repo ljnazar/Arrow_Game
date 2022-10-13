@@ -4,9 +4,21 @@ body.className = "overflow-y-hidden bg-neutral-700";
 
 const main = document.getElementById("main");
 
+divLoader = document.createElement("div");
+divLoader.className = "loader absolute inset-0 m-auto";
+main.append(divLoader);
+
+document.addEventListener('readystatechange', () => { 
+    if (document.readyState === "complete") {
+        divLoader.style.display = "none";
+        sectionInitial.style.display = "block";
+    }
+});
+
 const songInitial = new Audio("../audio/Hans_Zimmer_Alan_Walker_Time_Edit.mp3");
 songInitial.loop = true;
 songInitial.volume = 0.5;
+
 
 let namePlayer;
 
@@ -28,6 +40,7 @@ const renderInitialScreen = () => {
         </video>`;
 
     sectionInitial.innerHTML = initialScreen;
+    sectionInitial.style.display = "none";
     main.append(sectionInitial);
 
     const divInitial = document.createElement("div");

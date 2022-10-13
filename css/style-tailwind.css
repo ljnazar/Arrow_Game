@@ -574,6 +574,18 @@ video {
   top: 33.333333%;
 }
 
+.top-0 {
+  top: 0px;
+}
+
+.right-0 {
+  right: 0px;
+}
+
+.left-0 {
+  left: 0px;
+}
+
 .z-10 {
   z-index: 10;
 }
@@ -584,6 +596,10 @@ video {
 
 .z-20 {
   z-index: 20;
+}
+
+.m-auto {
+  margin: auto;
 }
 
 .mx-2 {
@@ -622,6 +638,10 @@ video {
 
 .ml-6 {
   margin-left: 1.5rem;
+}
+
+.block {
+  display: block;
 }
 
 .flex {
@@ -670,10 +690,6 @@ video {
 
 .self-start {
   align-self: flex-start;
-}
-
-.overflow-x-hidden {
-  overflow-x: hidden;
 }
 
 .overflow-y-hidden {
