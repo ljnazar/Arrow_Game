@@ -19,7 +19,6 @@ const songInitial = new Audio("../audio/Hans_Zimmer_Alan_Walker_Time_Edit.mp3");
 songInitial.loop = true;
 songInitial.volume = 0.5;
 
-
 let namePlayer;
 
 let sectionInitial;
@@ -118,12 +117,21 @@ const renderInitialScreen = () => {
 
         songGame = new Audio("../audio/Boris_Brejcha_To_The_Moon_And_Back_feat_Ginger_Edit_Short.mp3");
 
+        songGame.addEventListener('load', () => {
+            console.log("Tema cargado");
+        });
+
+        songGame.src = "../audio/Boris_Brejcha_To_The_Moon_And_Back_feat_Ginger_Edit_Short.mp3";
+
         joinButton.addEventListener("click", startGame);
 
     });
 }
 
 renderInitialScreen();
+
+
+
 
 
 // Test //
@@ -291,7 +299,7 @@ const arrowRight = `<img id="right" src="img/right-arrow.svg" alt="arrow-right" 
 
 const renderTableArrows = (sectionGame) => {
     let count = 0;
-    let mainTable = document.createElement("table");
+    const mainTable = document.createElement("table");
     mainTable.className = "absolute top-full z-10";
     sectionGame.append(mainTable);
     let rowTable;
@@ -435,56 +443,55 @@ let maxCombo = 1;
 let totalScore = 0;
 let finalScore = 0;
 
-const getData = async () => {
+const renderSectionPosition = (scoreObjs) => {
+
+    if(scoreObjs) {
+
+        const sectionPosition = document.createElement("section");
+
+        sectionPosition.className = "flex flex-col items-center";
+        
+        sectionPosition.innerHTML = "<h1>---- SCORE TABLE ----</h1>";
+
+        const tablePosition = document.createElement("table");
+        tablePosition.className = "zigzag";
+        sectionPosition.append(tablePosition);
+
+        let aux = "";
+        scoreObjs.forEach( obj => {
+            aux += `<tr><td>${obj.name}</td><td>${obj.score}</td></tr>`;
+        });
+
+        const tbody = document.createElement("tbody");
+        tbody.innerHTML = aux;
+        tablePosition.append(tbody);
+    
+        main.append(sectionPosition);
+
+    } else {
+        console.log("Error in render score table");
+    }
+
+};
+
+// Send player name and final score, then return updated score table
+const getScoreTable = async () => {
     try{
-        //const response = await fetch("../table-score.json");
+
         const response = await fetch("https://express-ljnazar.vercel.app/api/getData");
         const data = await response.json();
 
-        let scoreTable = "";
-        //data.forEach( x => {scoreTable += `${x.name} ------------------------------------------- ${x.score} <br>`});
-        scoreTable = data;
+        const scoreObjs = JSON.parse(data);
 
-        Swal.fire({
-            width: 500,
-            title: 'Score table',
-            html: scoreTable,
-            padding: '1em',
-            color: '#716add',
-            backdrop: 'rgba(0,0,123,0.4)'
-          });
+        renderSectionPosition(scoreObjs);
 
     } catch (e) {
         console.error(e);
-    } finally {
-        console.log("Async function end");
     }
 };
 
-const renderSectionPosition = () => {
-    let timerInterval
-    Swal.fire({
-        title: "Loading results",
-        html: "<b></b>",
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: () => {
-            Swal.showLoading();
-            const b = Swal.getHtmlContainer().querySelector('b');
-            timerInterval = setInterval(() => {
-                b.textContent = Swal.getTimerLeft();
-            }, 100);
-        },
-        willClose: () => {
-            clearInterval(timerInterval);
-            //location.reload();
-        }
-    }).then((result) => {
-        if (result.dismiss === Swal.DismissReason.timer) {
-            getData();
-        }
-    })
-};
+
+// Button play again -> location.reload();
 
 
 const startGame = () => {
@@ -544,7 +551,7 @@ const startGame = () => {
 
         sessionStorage.setItem("totalScore", totalScore);
 
-        renderSectionPosition();
+        getScoreTable();
 
     });
 
@@ -640,6 +647,9 @@ const startGame = () => {
         }else if(score === "MISS"){
             missCount += 1;
         }
+        // REVISARRRRRRRRRRRRRRRRR ///////////////////////////////////////////
+        // NO FUNCIONA BIEN //////////////////////////////////////////////////
+        // maxCombo REVISARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
         if(preScore && score === "PERFECT"){
             maxCombo += 1;
         }

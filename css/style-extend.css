@@ -173,3 +173,30 @@ td>img {
   border: solid black 1px;
   background-color: black;
 }
+
+
+
+table tbody tr td {
+  padding: 0.25em 0.5em;
+  background-color: #eee;
+}
+table tbody tr td:nth-child(1) {
+  text-align: left;
+  width: 80%;
+}
+table tbody tr td:nth-child(2) {
+  text-align: center;
+  width: 20%;
+}
+.zigzag {
+  font-family: sans-serif;
+  width: 50%;
+  border-collapse: separate;
+  border-spacing: 0.25em 1.5em;
+}
+.zigzag tbody tr:nth-child(odd) {
+  transform: rotate(1deg);
+}
+.zigzag tbody tr:nth-child(even) {
+  transform: rotate(-1deg);
+}
