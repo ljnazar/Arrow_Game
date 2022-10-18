@@ -1,10 +1,127 @@
+import { database } from './firebase-configure.js';
+import { refData } from './firebase-configure.js';
+import { pushData } from './firebase-configure.js';
+import { setData } from './firebase-configure.js';
+import { queryData } from './firebase-configure.js';
+import { orderByChildData } from './firebase-configure.js';
+import { onValueData } from './firebase-configure.js';
+
+const listRef = refData(database, 'table-score');
+/*const newDataRef = pushData(listRef);
+setData(newDataRef, {
+    "name": "LUIS", "score": 4532
+});*/
+
+//const getScore = queryData(listRef, orderByValueData('score'));
+//const getScore = queryData(listRef);
+//console.log(JSON.stringify(getScore));
+
+//const asd = queryData(listRef, orderByChildData('score'));
+//console.log(JSON.stringify(asd));
+
+//console.log(JSON.stringify(listRef));
+
+let sortable = [];
+
+onValueData(listRef, (snapshot) => {
+    //console.log(JSON.stringify(snapshot));
+    snapshot.forEach( childSnapshot => {
+        //console.log(JSON.stringify(childSnapshot));
+        /*childSnapshot.forEach(element => {
+            console.log(JSON.stringify(element));
+        });*/
+        ///////////////////////////
+        sortable.push(childSnapshot);
+        //console.log(JSON.stringify(sortable));
+        ///////////////////////////
+        //sortable.push(JSON.stringify([childSnapshot.name, childSnapshot.score]));
+        //const childKey = childSnapshot.key;
+        //const childData = childSnapshot.val();
+        //console.log(`${childKey} - ${childData}`);
+        //console.log(JSON.stringify(childSnapshot));
+    });
+
+    /*sortable.sort( (a, b) => {
+        console.log(a);
+        console.log(JSON.stringify(a));
+        return a.score - b.score;
+    });*/
+
+    sortable = JSON.stringify(sortable);
+
+    //console.log(JSON.stringify(sortable));
+
+    /*www.sort( (a, b) => {
+        return b.score - a.score;
+    });*/
+
+    //console.log(typeof(JSON.parse(www)));
+
+    sortable = JSON.parse(sortable);
+
+    sortable.sort( (a, b) => {
+        return b.score - a.score;
+    });
+
+    console.log(sortable);
+
+}, {
+    onlyOnce: true
+});
+
+//console.log(JSON.stringify(sortable));
+
+
+
+
+//console.log(typeof(sortable));
+
+//console.log(sortable);
+
+/*
+sortable.forEach(element => {
+    console.log(element);
+    console.log("asd");
+});
+*/
+
+//let aaa = JSON.stringify(sortable);
+
+//console.log(aaa);
+/*
+let ddd = [];
+
+asd.forEach(element => {
+   ddd.push(JSON.parse(element));
+});
+
+console.log(ddd);
+*/
+/*
+let ggg = [{"name": "aaa", "score": 5},
+    {"name": "bbb", "score": 0},
+    {"name": "ccc", "score": 7},
+    {"name": "ddd", "score": 2}
+];
+
+ggg.sort( (a, b) => {
+    return b.score - a.score;
+});
+
+console.log(typeof(ggg));
+console.log(ggg);
+*/
+
+
+
+
 const body = document.body;
 body.className = "overflow-y-hidden bg-neutral-700";
 //body.className = "bg-neutral-700";
 
 const main = document.getElementById("main");
 
-divLoader = document.createElement("div");
+const divLoader = document.createElement("div");
 divLoader.className = "loader absolute inset-0 m-auto";
 main.append(divLoader);
 
@@ -303,6 +420,7 @@ const renderTableArrows = (sectionGame) => {
     mainTable.className = "absolute top-full z-10";
     sectionGame.append(mainTable);
     let rowTable;
+    let arrowDirection;
     let aux = "";
     for(const arrow of track1){
         if(count === 0){
@@ -559,7 +677,7 @@ const startGame = () => {
 
     const pageScroll = () => {
         window.scrollBy(0,2);
-        scrolldelay = setTimeout(pageScroll,1);
+        setTimeout(pageScroll,1);
     };
 
     pageScroll();
