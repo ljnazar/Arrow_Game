@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
-import { getDatabase, ref, push, set, query, orderByChild, onValue } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
+import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyATx7DWFimsJ0yerkc2p1E_nMyKkoIwE0w",
@@ -18,6 +18,4 @@ export const database = getDatabase(app);
 export const refData = ref;
 export const pushData = push;
 export const setData = set;
-export const queryData = query;
-export const orderByChildData = orderByChild;
 export const onValueData = onValue;
