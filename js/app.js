@@ -1,10 +1,6 @@
-import { database } from './firebase-configure.js';
-import { refData } from './firebase-configure.js';
-import { pushData } from './firebase-configure.js';
-import { setData } from './firebase-configure.js';
-import { onValueData } from './firebase-configure.js';
+import { database, ref, push, set, onValue } from './firebase-configure.js';
 
-const listRef = refData(database, 'table-score');
+const listRef = ref(database, 'table-score');
 
 // Set data to Firebase
 /*const newDataRef = pushData(listRef);
@@ -14,7 +10,7 @@ setData(newDataRef, {
 
 // Get data to Firebase
 let sortable = [];
-onValueData(listRef, (snapshot) => {
+onValue(listRef, (snapshot) => {
     //console.log(JSON.stringify(snapshot));
     snapshot.forEach( childSnapshot => {
         //console.log(JSON.stringify(childSnapshot));
