@@ -1,36 +1,18 @@
 import { database, ref, push, set, onValue } from './firebase-configure.js';
 
+// Reference to database in firebase
 const listRef = ref(database, 'table-score');
 
 // Set data to Firebase
-/*const newDataRef = pushData(listRef);
-setData(newDataRef, {
-    "name": "LUIS", "score": 4532
-});*/
-
-// Get data to Firebase
-let sortable = [];
-onValue(listRef, (snapshot) => {
-    //console.log(JSON.stringify(snapshot));
-    snapshot.forEach( childSnapshot => {
-        //console.log(JSON.stringify(childSnapshot));
-        sortable.push(childSnapshot);
-        //console.log(JSON.stringify(sortable));
+const newDataRef = push(listRef);
+const writeDataScore = () => {
+    set(newDataRef, {
+    "name": "JUAN", "score": 4239
     });
+}
 
-    sortable = JSON.stringify(sortable);
+//writeDataScore();
 
-    sortable = JSON.parse(sortable);
-
-    sortable.sort( (a, b) => {
-        return b.score - a.score;
-    });
-
-    console.log(sortable);
-
-}, {
-    onlyOnce: true
-});
 
 const body = document.body;
 body.className = "overflow-y-hidden bg-neutral-700";
@@ -41,13 +23,6 @@ const main = document.getElementById("main");
 const divLoader = document.createElement("div");
 divLoader.className = "loader absolute inset-0 m-auto";
 main.append(divLoader);
-
-document.addEventListener('readystatechange', () => { 
-    if (document.readyState === "complete") {
-        divLoader.style.display = "none";
-        sectionInitial.style.display = "block";
-    }
-});
 
 const songInitial = new Audio("../audio/Hans_Zimmer_Alan_Walker_Time_Edit.mp3");
 songInitial.loop = true;
@@ -75,6 +50,13 @@ const renderInitialScreen = () => {
     sectionInitial.innerHTML = initialScreen;
     sectionInitial.style.display = "none";
     main.append(sectionInitial);
+
+    document.addEventListener('readystatechange', () => { 
+        if (document.readyState === "complete") {
+            divLoader.style.display = "none";
+            sectionInitial.style.display = "block";
+        }
+    });
 
     const divInitial = document.createElement("div");
     divInitial.className = "h-1/2 flex flex-col items-center justify-center";
@@ -151,12 +133,6 @@ const renderInitialScreen = () => {
 
         songGame = new Audio("../audio/Boris_Brejcha_To_The_Moon_And_Back_feat_Ginger_Edit_Short.mp3");
 
-        songGame.addEventListener('load', () => {
-            console.log("Tema cargado");
-        });
-
-        songGame.src = "../audio/Boris_Brejcha_To_The_Moon_And_Back_feat_Ginger_Edit_Short.mp3";
-
         joinButton.addEventListener("click", startGame);
 
     });
@@ -164,7 +140,12 @@ const renderInitialScreen = () => {
 
 renderInitialScreen();
 
-
+document.addEventListener('readystatechange', () => { 
+    if (document.readyState === "complete") {
+        divLoader.style.display = "none";
+        sectionInitial.style.display = "block";
+    }
+});
 
 
 
@@ -474,7 +455,7 @@ let greatCount = 0;
 let goodCount = 0;
 let badCount = 0;
 let missCount = 0;
-let maxCombo = 1;
+let maxCombo = 0;
 let totalScore = 0;
 let finalScore = 0;
 
@@ -494,6 +475,9 @@ const renderSectionPosition = (scoreObjs) => {
 
         let aux = "";
         scoreObjs.forEach( obj => {
+
+            console.log(obj)
+
             aux += `<tr><td>${obj.name}</td><td>${obj.score}</td></tr>`;
         });
 
@@ -507,27 +491,37 @@ const renderSectionPosition = (scoreObjs) => {
         console.log("Error in render score table");
     }
 
+    // Button play again -> location.reload();
+
 };
 
-// Send player name and final score, then return updated score table
-const getScoreTable = async () => {
-    try{
+// Get data to Firebase
+const GetTableScore = () => {
+    let sortable = [];
+    onValue(listRef, (snapshot) => {
+        //console.log(JSON.stringify(snapshot));
+        snapshot.forEach( childSnapshot => {
+            //console.log(JSON.stringify(childSnapshot));
+            sortable.push(childSnapshot);
+            //console.log(JSON.stringify(sortable));
+        });
+    
+        sortable = JSON.stringify(sortable);
+    
+        sortable = JSON.parse(sortable);
+    
+        sortable.sort( (a, b) => {
+            return b.score - a.score;
+        });
 
-        const response = await fetch("https://express-ljnazar.vercel.app/api/getData");
-        const data = await response.json();
+        console.log(sortable);
 
-        const scoreObjs = JSON.parse(data);
-
-        renderSectionPosition(scoreObjs);
-
-    } catch (e) {
-        console.error(e);
-    }
-};
-
-
-// Button play again -> location.reload();
-
+        renderSectionPosition(sortable);
+    
+    }, {
+        onlyOnce: true
+    });
+}
 
 const startGame = () => {
 
@@ -586,7 +580,7 @@ const startGame = () => {
 
         sessionStorage.setItem("totalScore", totalScore);
 
-        getScoreTable();
+        GetTableScore();
 
     });
 
@@ -673,6 +667,9 @@ const startGame = () => {
         totalScore += scoreSelectObj.point;
         if(score === "PERFECT"){
             perfectCount += 1;
+            if(preScore === "PERFECT"){
+                maxCombo += 1;
+            }
         }else if(score === "GREAT"){
             greatCount += 1;
         }else if(score === "GOOD"){
@@ -682,12 +679,7 @@ const startGame = () => {
         }else if(score === "MISS"){
             missCount += 1;
         }
-        // REVISARRRRRRRRRRRRRRRRR ///////////////////////////////////////////
-        // NO FUNCIONA BIEN //////////////////////////////////////////////////
-        // maxCombo REVISARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-        if(preScore && score === "PERFECT"){
-            maxCombo += 1;
-        }
+
         preScore = score;
         
         //numberScore.textContent = totalScore;
