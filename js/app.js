@@ -29,11 +29,8 @@ songInitial.loop = true;
 songInitial.volume = 0.5;
 
 let namePlayer;
-
 let sectionInitial;
-
 let generalVolume;
-
 let songGame;
 
 const renderInitialScreen = () => {
@@ -74,31 +71,22 @@ const renderInitialScreen = () => {
         </div>`;
 
     divInitial.innerHTML = contentInitial;
-
     sectionInitial.append(divInitial);
 
-    //const textVolume = document.getElementById("text-volume");
     const sliderVolume = document.getElementById("slider-volume");
     const valueVolume = document.getElementById("value-volume");
-
     const applyButton = document.getElementById("apply-button");
     applyButton.disabled = true;
     applyButton.style.border = "solid 4px #3d3d3d";
     applyButton.style.color = "#3d3d3d";
-
     valueVolume.innerHTML = "50%";
 
     sliderVolume.addEventListener("change", function(event){
-
         applyButton.disabled = false;
-
         generalVolume = event.currentTarget.value;
-
         valueVolume.innerHTML = generalVolume * 100 + "%";
-
         songInitial.volume = generalVolume;
         songInitial.play();
-
     });
 
     applyButton.addEventListener("click", () => {
@@ -114,8 +102,7 @@ const renderInitialScreen = () => {
 
         divInitial.innerHTML = contentInitial;
 
-        let inputName = document.getElementById("input-name");
-
+        const inputName = document.getElementById("input-name");
         const joinButton = document.getElementById("join-button");
         joinButton.disabled = true;
 
@@ -139,15 +126,6 @@ const renderInitialScreen = () => {
 }
 
 renderInitialScreen();
-
-document.addEventListener('readystatechange', () => { 
-    if (document.readyState === "complete") {
-        divLoader.style.display = "none";
-        sectionInitial.style.display = "block";
-    }
-});
-
-
 
 // Test //
 /*let track1 = [];
@@ -407,7 +385,7 @@ const intersectionObserver = () => {
                 //body.style.backgroundColor = violet;
                 score = "BAD";
             }
-            // observer.rootMargin === marginMiss
+            // if -> observer.rootMargin === marginMiss
             else{
                 //body.style.backgroundColor = red;
                 score = "MISS";
@@ -455,11 +433,11 @@ let greatCount = 0;
 let goodCount = 0;
 let badCount = 0;
 let missCount = 0;
-let maxCombo = 0;
 let totalScore = 0;
+let maxCombo = 0;
 let finalScore = 0;
 
-const renderSectionPosition = (scoreObjs) => {
+const renderPositionTable = (scoreObjs) => {
 
     if(scoreObjs) {
 
@@ -475,9 +453,6 @@ const renderSectionPosition = (scoreObjs) => {
 
         let aux = "";
         scoreObjs.forEach( obj => {
-
-            console.log(obj)
-
             aux += `<tr><td>${obj.name}</td><td>${obj.score}</td></tr>`;
         });
 
@@ -497,31 +472,53 @@ const renderSectionPosition = (scoreObjs) => {
 
 // Get data to Firebase
 const GetTableScore = () => {
-    let sortable = [];
+    let scoreObjs = [];
     onValue(listRef, (snapshot) => {
-        //console.log(JSON.stringify(snapshot));
         snapshot.forEach( childSnapshot => {
-            //console.log(JSON.stringify(childSnapshot));
-            sortable.push(childSnapshot);
-            //console.log(JSON.stringify(sortable));
+            scoreObjs.push(childSnapshot);
         });
     
-        sortable = JSON.stringify(sortable);
+        scoreObjs = JSON.stringify(scoreObjs);
+        scoreObjs = JSON.parse(scoreObjs);
     
-        sortable = JSON.parse(sortable);
-    
-        sortable.sort( (a, b) => {
+        scoreObjs.sort( (a, b) => {
             return b.score - a.score;
         });
 
-        console.log(sortable);
-
-        renderSectionPosition(sortable);
+        renderPositionTable(scoreObjs);
     
     }, {
         onlyOnce: true
     });
 }
+
+const renderScore = () => {
+
+    const sectionScore = document.createElement("section");
+
+    sectionScore.className = "flex flex-col items-center";
+    
+    sectionScore.innerHTML = "<h1>---- SCORE DETAIL ----</h1>";
+
+    const tablePosition = document.createElement("table");
+
+    let scoreDetail = `
+    <tr><td>PERFECT</td><td>${perfectCount}</td></tr>
+    <tr><td>GREAT</td><td>${greatCount}</td></tr>
+    <tr><td>GOOD</td><td>${goodCount}</td></tr>
+    <tr><td>BAD</td><td>${badCount}</td></tr>
+    <tr><td>MISS</td><td>${missCount}</td></tr>
+    <tr><td>TOTAL SCORE</td><td>${totalScore}</td></tr>
+    <tr><td>MAX COMBO</td><td>${maxCombo}</td></tr>
+    <tr><td>FINAL SCORE</td><td>${finalScore}</td></tr>`;
+
+    tablePosition.innerHTML = scoreDetail;
+    sectionScore.append(tablePosition);
+
+    main.append(sectionScore);
+
+    //GetTableScore
+};
 
 const startGame = () => {
 
@@ -578,9 +575,11 @@ const startGame = () => {
 
         sectionGame.remove();
 
+        finalScore =  maxCombo ? totalScore * maxCombo : totalScore;
+
         sessionStorage.setItem("totalScore", totalScore);
 
-        GetTableScore();
+        renderScore();
 
     });
 
