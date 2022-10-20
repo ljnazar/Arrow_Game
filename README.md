@@ -1,2 +1,2 @@
-# Project_JS [Game - Pump it up]
+# Arrow Game
  JavaScript implementation - in progress
