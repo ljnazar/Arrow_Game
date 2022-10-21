@@ -39,7 +39,7 @@ const renderInitialScreen = () => {
     sectionInitial.className = "h-screen";
 
     const initialScreen = `
-        <h1 class="mt-10 text-center text-zinc-200 text-5xl font-bold">Arrow Game</h1>
+        <h1 class="mt-10 text-center text-zinc-200 text-5xl font-bold">Arrow Game () => {}</h1>
         <video class="opacity-50 bg-z-index h-screen w-screen object-cover fixed inset-0" autoplay muted loop>
             <source src="video/Initial_Vid.mp4" type="video/mp4">
         </video>`;
@@ -548,24 +548,8 @@ const startGame = () => {
                 <li><a href="#right">${arrowRight}</a></li>
             </ul>
         </nav>`;
-    const lines = `
-        <!-- Perfect -->
-        <div id="linea1"></div>
-        <div id="linea2"></div>
-        <!-- Great -->
-        <div id="linea3"></div>
-        <div id="linea4"></div>
-        <!-- Good -->
-        <div id="linea5"></div>
-        <div id="linea6"></div>
-        <!-- Bad -->
-        <div id="linea7"></div>
-        <div id="linea8"></div>
-        <!-- Miss -->
-        <div id="linea9"></div>
-        <div id="linea10"></div>`;
-    //sectionGame.innerHTML = backgroundTrack1 + arrowsFixed + lines;
-    sectionGame.innerHTML = arrowsFixed + lines;
+    //sectionGame.innerHTML = backgroundTrack1 + arrowsFixed;
+    sectionGame.innerHTML = arrowsFixed;
 
     main.append(sectionGame);
 
@@ -727,14 +711,14 @@ const startGame = () => {
 
         }
 
-        console.log("---------------");
+        /*console.log("---------------");
         console.log(perfectCount);
         console.log(greatCount);
         console.log(goodCount);
         console.log(badCount);
         console.log(missCount);
         console.log(maxCombo);
-        console.log(totalScore);
+        console.log(totalScore);*/
 
     }
 
