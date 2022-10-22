@@ -495,13 +495,10 @@ const GetTableScore = () => {
 const renderScore = () => {
 
     const sectionScore = document.createElement("section");
-
     sectionScore.className = "flex flex-col items-center";
-    
     sectionScore.innerHTML = "<h1>---- SCORE DETAIL ----</h1>";
 
     const tablePosition = document.createElement("table");
-
     let scoreDetail = `
     <tr><td>PERFECT</td><td>${perfectCount}</td></tr>
     <tr><td>GREAT</td><td>${greatCount}</td></tr>
@@ -511,13 +508,20 @@ const renderScore = () => {
     <tr><td>TOTAL SCORE</td><td>${totalScore}</td></tr>
     <tr><td>MAX COMBO</td><td>${maxCombo}</td></tr>
     <tr><td>FINAL SCORE</td><td>${finalScore}</td></tr>`;
-
     tablePosition.innerHTML = scoreDetail;
     sectionScore.append(tablePosition);
 
+    const buttonViewPosition = document.createElement("div");
+    buttonViewPosition.innerHTML = "<button>View Position Table</button>";
+    sectionScore.append(buttonViewPosition);
+
     main.append(sectionScore);
 
-    //GetTableScore
+    buttonViewPosition.addEventListener("click", () => {
+        sectionScore.remove();
+        GetTableScore();
+    });
+
 };
 
 const startGame = () => {
@@ -584,11 +588,6 @@ const startGame = () => {
         {score: "MISS", color: red, point: -50}
     ];
 
-    /*const numberScore = document.createElement("h2");
-    numberScore.className = "text-shadow text-family z-20 fixed mt-12 ml-6 self-start font-bold text-7xl";
-
-    sectionGame.append(numberScore);*/
-
     const hiddenTimer = (element) => {
         element.classList.remove("d-none");
         element.classList.add("d-block");
@@ -598,47 +597,13 @@ const startGame = () => {
           }, 250);
     };
 
-    // Performance Test //
-    /*const hiddenTimer = (element) => {
-        element.classList.remove("d-none");
-        element.classList.add("d-block");
-        setTimeout( () => {
-            element.style.fontSize = "3.9rem"
-          }, 25);
-          setTimeout( () => {
-            element.style.fontSize = "4rem"
-          }, 50);
-          setTimeout( () => {
-            element.style.fontSize = "4.1rem"
-          }, 75);
-          setTimeout( () => {
-            element.style.fontSize = "4.2rem"
-          }, 100);
-          setTimeout( () => {
-            element.style.fontSize = "4.3rem"
-          }, 125);
-          setTimeout( () => {
-            element.style.fontSize = "4.5rem"
-          }, 150);
-          setTimeout( () => {
-            element.style.fontSize = "4.4rem"
-          }, 175);
-          setTimeout( () => {
-            element.style.fontSize = "4.2rem"
-          }, 200);
-          setTimeout( () => {
-            element.style.fontSize = "4rem"
-          }, 225);
-        setTimeout( () => {
-            element.style.fontSize = "3.75rem"
-            element.classList.remove("d-block");
-            element.classList.add("d-none");
-          }, 250);
-    };*/
-
     const textScore = document.createElement("h2");
     textScore.className = "d-none text-shadow text-family z-20 fixed mx-auto top-1/3 font-bold text-7xl";
     sectionGame.append(textScore);
+
+    /*const maxComboScore = document.createElement("h2");
+    maxComboScore.className = "d-none text-shadow text-family z-20 fixed mx-auto top-1/3 mt-20 font-bold text-7xl";
+    sectionGame.append(maxComboScore);*/
 
     let preScore;
 
@@ -652,6 +617,10 @@ const startGame = () => {
             perfectCount += 1;
             if(preScore === "PERFECT"){
                 maxCombo += 1;
+                //maxComboScore.textContent = maxCombo;
+                //maxComboScore.style.color = scoreSelectObj.color;
+                //maxComboScore.classList.add("textAnimate");
+                //hiddenTimer(maxComboScore);
             }
         }else if(score === "GREAT"){
             greatCount += 1;
@@ -662,11 +631,7 @@ const startGame = () => {
         }else if(score === "MISS"){
             missCount += 1;
         }
-
         preScore = score;
-        
-        //numberScore.textContent = totalScore;
-        //numberScore.style.color = scoreSelectObj.color;
     };
 
     handleKeyboard =  (e) => {
