@@ -293,7 +293,7 @@ const arrowRight = `<img id="right" src="img/right-arrow.svg" alt="arrow-right" 
 const renderTableArrows = (sectionGame) => {
     let count = 0;
     const mainTable = document.createElement("table");
-    mainTable.className = "absolute top-full z-10";
+    mainTable.className = "absolute top-full z-20";
     sectionGame.append(mainTable);
     let rowTable;
     let arrowDirection;
@@ -459,14 +459,20 @@ const renderPositionTable = (scoreObjs) => {
         const tbody = document.createElement("tbody");
         tbody.innerHTML = aux;
         tablePosition.append(tbody);
+
+        const buttonPlayAgain = document.createElement("div");
+        buttonPlayAgain.innerHTML = "<button>Play Again</button>";
+        sectionPosition.append(buttonPlayAgain);
     
         main.append(sectionPosition);
+    
+        buttonPlayAgain.addEventListener("click", () => {
+            location.reload();
+        });
 
     } else {
         console.log("Error in render score table");
     }
-
-    // Button play again -> location.reload();
 
 };
 
@@ -492,6 +498,10 @@ const GetTableScore = () => {
     });
 }
 
+const bgImage = document.createElement("div");
+bgImage.className = "z-30 fixed inset-0";
+bgImage.style.backgroundImage = "url('../img/mountains.png')";
+
 const renderScore = () => {
 
     const sectionScore = document.createElement("section");
@@ -511,8 +521,11 @@ const renderScore = () => {
     tablePosition.innerHTML = scoreDetail;
     sectionScore.append(tablePosition);
 
+    sectionScore.append(bgImage);
+
     const buttonViewPosition = document.createElement("div");
     buttonViewPosition.innerHTML = "<button>View Position Table</button>";
+    buttonViewPosition.classList.add("z-40");
     sectionScore.append(buttonViewPosition);
 
     main.append(sectionScore);
@@ -544,7 +557,7 @@ const startGame = () => {
         <source src="video/Track_1.mp4" type="video/mp4">
     </video>`;*/
     const arrowsFixed = `
-        <nav class="fixed pt-10 z-0 flex justify-center">
+        <nav class="fixed pt-10 z-10 flex justify-center">
             <ul id="spy-nav" class="flex">
                 <li><a href="#left">${arrowLeft}</a></li>
                 <li><a href="#up">${arrowUp}</a></li>
@@ -554,6 +567,12 @@ const startGame = () => {
         </nav>`;
     //sectionGame.innerHTML = backgroundTrack1 + arrowsFixed;
     sectionGame.innerHTML = arrowsFixed;
+
+    sectionGame.append(bgImage);
+
+    const bgColor = document.createElement("div");
+    bgColor.className = "z-0 fixed inset-0 opacity-20";
+    sectionGame.append(bgColor);
 
     main.append(sectionGame);
 
@@ -646,29 +665,33 @@ const startGame = () => {
 
             spyArrow.classList.add("blink");
             scoreRender(score, scoreSelectObj);
+            bgColor.style.backgroundColor = scoreSelectObj.color;
         }
         else if(e.key === "ArrowUp" && spyElement.className === "active" && idArrow === "up"){
 
             spyArrow.classList.add("blink");
             scoreRender(score, scoreSelectObj);
+            bgColor.style.backgroundColor = scoreSelectObj.color;
 
         }
         else if(e.key === "ArrowDown" && spyElement.className === "active" && idArrow === "down"){
 
             spyArrow.classList.add("blink");
             scoreRender(score, scoreSelectObj);
+            bgColor.style.backgroundColor = scoreSelectObj.color;
 
         }
         else if(e.key === "ArrowRight" && spyElement.className === "active" && idArrow === "right"){
 
             spyArrow.classList.add("blink");
             scoreRender(score, scoreSelectObj);
+            bgColor.style.backgroundColor = scoreSelectObj.color;
 
         }
         else{
 
             spyElement.classList.remove("active");
-            //body.style.backgroundColor = red;
+            bgColor.style.backgroundColor = red;
 
             score = "MISS";
             scoreSelectObj = scoreObjects[4];
