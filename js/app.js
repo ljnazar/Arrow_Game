@@ -3,17 +3,6 @@ import { database, ref, push, set, onValue } from './firebase-configure.js';
 // Reference to database in firebase
 const listRef = ref(database, 'table-score');
 
-// Set data to Firebase
-const newDataRef = push(listRef);
-const writeDataScore = () => {
-    set(newDataRef, {
-    "name": "JUAN", "score": 4239
-    });
-}
-
-//writeDataScore();
-
-
 const body = document.body;
 body.className = "overflow-y-hidden bg-neutral-700";
 //body.className = "bg-neutral-700";
@@ -437,9 +426,13 @@ let totalScore = 0;
 let maxCombo = 0;
 let finalScore = 0;
 
+let idIntervalScroll;
+
 const renderPositionTable = (scoreObjs) => {
 
     if(scoreObjs) {
+
+        body.className = "bg-neutral-700";
 
         const sectionPosition = document.createElement("section");
 
@@ -504,6 +497,8 @@ bgImage.style.backgroundImage = "url('../img/mountains.png')";
 
 const renderScore = () => {
 
+    clearInterval(idIntervalScroll);
+
     const sectionScore = document.createElement("section");
     sectionScore.className = "flex flex-col items-center";
     sectionScore.innerHTML = "<h1>---- SCORE DETAIL ----</h1>";
@@ -535,6 +530,19 @@ const renderScore = () => {
         GetTableScore();
     });
 
+    sessionStorage.setItem("finalScore", finalScore);
+    let finalScoreStorage = sessionStorage.getItem("finalScore");
+
+    let namePayerStorage = sessionStorage.getItem("name");
+
+    // Set data to Firebase
+    const newDataRef = push(listRef);
+    const writeDataScore = (storageA, storegeB) => {
+        set(newDataRef, {"name": storageA, "score": storegeB});
+    }
+
+    writeDataScore(namePayerStorage, finalScoreStorage);
+
 };
 
 const startGame = () => {
@@ -543,7 +551,6 @@ const startGame = () => {
     songInitial.currentTime = 0;
 
     sessionStorage.setItem("name", namePlayer.toUpperCase());
-    //console.log(sessionStorage.getItem("name"));
 
     sectionInitial.remove();
 
@@ -592,12 +599,9 @@ const startGame = () => {
 
     intersectionObserver();
 
-    const pageScroll = () => {
-        window.scrollBy(0,2);
-        setTimeout(pageScroll,1);
-    };
-
-    pageScroll();
+    idIntervalScroll = setInterval(() => {
+        window.scrollBy(0, 2);
+    }, 5.4);
 
     const scoreObjects = [
         {score: "PERFECT", color: blue, point: 100},
