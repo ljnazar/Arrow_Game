@@ -1,3 +1,12 @@
+@font-face {
+  font-family: "Game-Of-Squids";
+  src: url("../fonts/Game-Of-Squids.ttf");
+}
+@font-face {
+  font-family: "Fun-Games";
+  src: url("../fonts/Fun-Games.ttf");
+}
+
 .loader {
   border: 12px solid #f3f3f3;
   border-radius: 50%;
@@ -64,6 +73,22 @@ td>img {
   }
 }
 
+.font-family-title{
+  font-family: 'Game-Of-Squids';
+}
+
+.font-family-score-text{
+  font-family: 'Chakra Petch', sans-serif;
+}
+
+.font-family-player-points{
+  font-family: 'Fun-Games';
+}
+
+.font-family-score-table{
+  font-family: 'Bungee Shade';
+}
+
 .text-shadow{
   text-shadow: 0 0 2px black,
   0 0 4px black,
@@ -71,10 +96,6 @@ td>img {
   0 0 8px white,
   0 0 10px white,
   0 0 12px white
-}
-
-.text-family{
-  font-family: 'Chakra Petch', sans-serif;
 }
 
 .d-none{
@@ -112,7 +133,7 @@ table tbody tr td:nth-child(3) {
 }
 .zigzag {
   font-family: sans-serif;
-  width: 30%;
+  width: 40%;
   border-collapse: separate;
   border-spacing: 0.25em 1.5em;
 }

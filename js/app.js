@@ -13,7 +13,7 @@ const divLoader = document.createElement("div");
 divLoader.className = "loader absolute inset-0 m-auto";
 main.append(divLoader);
 
-const songInitial = new Audio("../audio/5.flac");
+const songInitial = new Audio("../audio/Hans_Zimmer_Alan_Walker_Time_Edit.mp3");
 songInitial.loop = true;
 songInitial.volume = 0.5;
 
@@ -28,7 +28,7 @@ const renderInitialScreen = () => {
     sectionInitial.className = "h-screen";
 
     const initialScreen = `
-        <h1 class="mt-10 text-center text-zinc-200 text-5xl font-bold">Arrow Game () => {}</h1>
+        <h1 class="mt-10 text-center text-zinc-200 text-7xl font-family-title font-bold text-shadow">Arrow Game</h1>
         <video class="opacity-50 bg-z-index h-screen w-screen object-cover fixed inset-0" autoplay muted loop>
             <source src="video/Initial_Vid.mp4" type="video/mp4">
         </video>`;
@@ -331,52 +331,41 @@ const intersectionObserver = () => {
     const spyItem = (entries, observer) => {
         entries.forEach(entry => {
             //console.log(entry);
-
             spyArrow = entry.target;
             idArrow = spyArrow.id;
 
             spyElement = spyNav.querySelector(`[href="#${idArrow}"`);
-
             spyElement.classList.remove("active");
 
             if(observer.rootMargin === marginPerfect){
                 spyElement.classList.add("active");
-                //body.style.backgroundColor = green;
                 score = "GREAT";
                 if (!entry.isIntersecting) return;
-                //body.style.backgroundColor = blue;
                 score = "PERFECT";
 
-                console.log(songGame.currentTime);
+                //console.log(songGame.currentTime);
 
             }
             else if(observer.rootMargin === marginGreat){
                 spyElement.classList.add("active");
-                //body.style.backgroundColor = yellow;
                 score = "GOOD";
                 if (!entry.isIntersecting) return;
-                //body.style.backgroundColor = green;
                 score = "GREAT";
             }
             else if(observer.rootMargin === marginGood){
                 spyElement.classList.add("active");
-                //body.style.backgroundColor = violet;
                 score = "BAD";
                 if (!entry.isIntersecting) return;
-                //body.style.backgroundColor = yellow;
                 score = "GOOD";
             }
             else if(observer.rootMargin === marginBad){
                 spyElement.classList.add("active");
-                //body.style.backgroundColor = red;
                 score = "MISS";
                 if (!entry.isIntersecting) return;
-                //body.style.backgroundColor = violet;
                 score = "BAD";
             }
             // if -> observer.rootMargin === marginMiss
             else{
-                //body.style.backgroundColor = red;
                 score = "MISS";
             }
 
@@ -431,30 +420,36 @@ let idIntervalScroll;
 let finalScoreStorage;
 let namePayerStorage;
 
+const bgImage = document.createElement("div");
+bgImage.className = "z-30 fixed inset-0";
+bgImage.style.backgroundImage = "url('../img/mountains.png')";
+
 const renderPositionTable = (scoreObjs) => {
 
     if(scoreObjs) {
 
-        body.className = "bg-neutral-700";
-
         const sectionPosition = document.createElement("section");
-
         sectionPosition.className = "flex flex-col items-center";
-        
-        sectionPosition.innerHTML = "<h1>---- SCORE TABLE ----</h1>";
+
+        const divTitlePosition = document.createElement("div");
+        divTitlePosition.className = "pt-24";
+        divTitlePosition.innerHTML = "<h1 class='z-40 bg-zinc-50 w-full text-center fixed top-0 left-0 py-5 text-5xl font-family-score-table'>SCORE TABLE</h1>";
+        sectionPosition.append(divTitlePosition);
+
 
         const tablePosition = document.createElement("table");
         tablePosition.className = "zigzag";
         sectionPosition.append(tablePosition);
 
         let aux = "";
-        let count = 0;
+        let count = 1;
         scoreObjs.forEach( obj => {
             if(obj.name === namePayerStorage && obj.score === finalScoreStorage){
-                aux += `<tr><td class="bg-cyan-200">${count++}</td><td class="bg-cyan-200">${obj.name}</td><td class="bg-cyan-200">${obj.score}</td></tr>`;
+                aux += `<tr><td class="bg-teal-400">${count}</td><td class="bg-teal-400">${obj.name}</td><td class="bg-teal-400">${obj.score}</td></tr>`;
             }else{
-                aux += `<tr><td>${count++}</td><td>${obj.name}</td><td>${obj.score}</td></tr>`;
+                aux += `<tr><td>${count}</td><td>${obj.name}</td><td>${obj.score}</td></tr>`;
             }
+            count++;
         });
 
         const tbody = document.createElement("tbody");
@@ -462,8 +457,11 @@ const renderPositionTable = (scoreObjs) => {
         tablePosition.append(tbody);
 
         const buttonPlayAgain = document.createElement("div");
+        buttonPlayAgain.className = "z-40 mt-6 mb-56";
         buttonPlayAgain.innerHTML = "<button>Play Again</button>";
         sectionPosition.append(buttonPlayAgain);
+
+        sectionPosition.append(bgImage);
     
         main.append(sectionPosition);
     
@@ -499,9 +497,7 @@ const GetTableScore = () => {
     });
 };
 
-const bgImage = document.createElement("div");
-bgImage.className = "z-30 fixed inset-0";
-bgImage.style.backgroundImage = "url('../img/mountains.png')";
+
 
 const renderScore = () => {
 
@@ -509,7 +505,7 @@ const renderScore = () => {
 
     const sectionScore = document.createElement("section");
     sectionScore.className = "flex flex-col items-center";
-    sectionScore.innerHTML = "<h1>---- SCORE DETAIL ----</h1>";
+    sectionScore.innerHTML = "<h1 class='py-6 text-4xl font-family-player-points'>---- PLAYER POINTS ----</h1>";
 
     const tablePosition = document.createElement("table");
     let scoreDetail = `
@@ -527,8 +523,8 @@ const renderScore = () => {
     sectionScore.append(bgImage);
 
     const buttonViewPosition = document.createElement("div");
+    buttonViewPosition.className = "z-40";
     buttonViewPosition.innerHTML = "<button>View Position Table</button>";
-    buttonViewPosition.classList.add("z-40");
     sectionScore.append(buttonViewPosition);
 
     main.append(sectionScore);
@@ -570,6 +566,10 @@ const loadGame = (sectionGame) => {
             sectionGame.classList.add("d.block");
             songGame.volume = generalVolume;
             songGame.play();
+            // Auto Scroll
+            idIntervalScroll = setInterval(() => {
+                window.scrollBy(0, 2);
+            }, 5.4);
         }
     });
 };
@@ -582,9 +582,6 @@ const startGame = () => {
     sessionStorage.setItem("name", namePlayer.toUpperCase());
 
     sectionInitial.remove();
-
-    //songGame.play();
-    //songGame.volume = generalVolume;
 
     const sectionGame = document.createElement("section");
     sectionGame.className = "d-none flex flex-col items-center";
@@ -616,14 +613,11 @@ const startGame = () => {
         sectionGame.remove();
         finalScore =  maxCombo ? totalScore * maxCombo : totalScore;
         sessionStorage.setItem("totalScore", totalScore);
+        body.className = "bg-zinc-50";
         renderScore();
     });
 
     intersectionObserver();
-
-    idIntervalScroll = setInterval(() => {
-        window.scrollBy(0, 2);
-    }, 5.4);
 
     const scoreObjects = [
         {score: "PERFECT", color: blue, point: 100},
@@ -643,11 +637,11 @@ const startGame = () => {
     };
 
     const textScore = document.createElement("h2");
-    textScore.className = "d-none text-shadow text-family z-20 fixed mx-auto top-1/3 font-bold text-7xl";
+    textScore.className = "d-none text-shadow font-family-score-text z-20 fixed mx-auto top-1/3 font-bold text-7xl";
     sectionGame.append(textScore);
 
     /*const maxComboScore = document.createElement("h2");
-    maxComboScore.className = "d-none text-shadow text-family z-20 fixed mx-auto top-1/3 mt-20 font-bold text-7xl";
+    maxComboScore.className = "d-none text-shadow font-family-score-text z-20 fixed mx-auto top-1/3 mt-20 font-bold text-7xl";
     sectionGame.append(maxComboScore);*/
 
     let preScore;
