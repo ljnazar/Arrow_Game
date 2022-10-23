@@ -95,19 +95,24 @@ td>img {
 
 table tbody tr td {
   padding: 0.25em 0.5em;
-  background-color: #eee;
+  background-color: #eeeeee;
 }
 table tbody tr td:nth-child(1) {
-  text-align: left;
-  width: 80%;
+  text-align: center;
+  width: 5%;
 }
 table tbody tr td:nth-child(2) {
+  text-align: left;
+  padding-left: 20px;
+  width: 80%;
+}
+table tbody tr td:nth-child(3) {
   text-align: center;
-  width: 20%;
+  width: 15%;
 }
 .zigzag {
   font-family: sans-serif;
-  width: 50%;
+  width: 30%;
   border-collapse: separate;
   border-spacing: 0.25em 1.5em;
 }

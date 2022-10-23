@@ -428,6 +428,9 @@ let finalScore = 0;
 
 let idIntervalScroll;
 
+let finalScoreStorage;
+let namePayerStorage;
+
 const renderPositionTable = (scoreObjs) => {
 
     if(scoreObjs) {
@@ -445,8 +448,13 @@ const renderPositionTable = (scoreObjs) => {
         sectionPosition.append(tablePosition);
 
         let aux = "";
+        let count = 0;
         scoreObjs.forEach( obj => {
-            aux += `<tr><td>${obj.name}</td><td>${obj.score}</td></tr>`;
+            if(obj.name === namePayerStorage && obj.score === finalScoreStorage){
+                aux += `<tr><td class="bg-cyan-200">${count++}</td><td class="bg-cyan-200">${obj.name}</td><td class="bg-cyan-200">${obj.score}</td></tr>`;
+            }else{
+                aux += `<tr><td>${count++}</td><td>${obj.name}</td><td>${obj.score}</td></tr>`;
+            }
         });
 
         const tbody = document.createElement("tbody");
@@ -531,9 +539,9 @@ const renderScore = () => {
     });
 
     sessionStorage.setItem("finalScore", finalScore);
-    let finalScoreStorage = sessionStorage.getItem("finalScore");
+    finalScoreStorage = sessionStorage.getItem("finalScore");
 
-    let namePayerStorage = sessionStorage.getItem("name");
+    namePayerStorage = sessionStorage.getItem("name");
 
     // Set data to Firebase
     const newDataRef = push(listRef);
