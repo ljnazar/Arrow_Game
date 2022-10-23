@@ -13,7 +13,7 @@ const divLoader = document.createElement("div");
 divLoader.className = "loader absolute inset-0 m-auto";
 main.append(divLoader);
 
-const songInitial = new Audio("../audio/Hans_Zimmer_Alan_Walker_Time_Edit.mp3");
+const songInitial = new Audio("../audio/5.flac");
 songInitial.loop = true;
 songInitial.volume = 0.5;
 
@@ -112,7 +112,7 @@ const renderInitialScreen = () => {
         joinButton.addEventListener("click", startGame);
 
     });
-}
+};
 
 renderInitialScreen();
 
@@ -497,7 +497,7 @@ const GetTableScore = () => {
     }, {
         onlyOnce: true
     });
-}
+};
 
 const bgImage = document.createElement("div");
 bgImage.className = "z-30 fixed inset-0";
@@ -547,10 +547,31 @@ const renderScore = () => {
     const newDataRef = push(listRef);
     const writeDataScore = (storageA, storegeB) => {
         set(newDataRef, {"name": storageA, "score": storegeB});
-    }
+    };
 
     writeDataScore(namePayerStorage, finalScoreStorage);
 
+};
+
+const loadGame = (sectionGame) => {
+    let timerInterval
+    Swal.fire({
+        title: "Instructions to play",
+        html: "<p class='font-medium'>Match the arrows on screen using your keyboard</p><br><img class='m-auto w-36' src='../img/keyboard-arrows.png'></img><br>Loading...",
+        timer: 10000,
+        timerProgressBar: true,
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        },
+        willClose: () => {
+            clearInterval(timerInterval);
+            sectionGame.classList.remove("d-none");
+            sectionGame.classList.add("d.block");
+            songGame.volume = generalVolume;
+            songGame.play();
+        }
+    });
 };
 
 const startGame = () => {
@@ -562,15 +583,14 @@ const startGame = () => {
 
     sectionInitial.remove();
 
-    songGame.play();
-    songGame.volume = generalVolume;
+    //songGame.play();
+    //songGame.volume = generalVolume;
 
     const sectionGame = document.createElement("section");
-    sectionGame.className = "flex flex-col items-center";
-    /*const backgroundTrack1 = `
-    <video class="opacity-80 bg-z-index h-screen w-screen object-cover fixed inset-0" autoplay loop>
-        <source src="video/Track_1.mp4" type="video/mp4">
-    </video>`;*/
+    sectionGame.className = "d-none flex flex-col items-center";
+
+    loadGame(sectionGame);
+
     const arrowsFixed = `
         <nav class="fixed pt-10 z-10 flex justify-center">
             <ul id="spy-nav" class="flex">
@@ -580,7 +600,6 @@ const startGame = () => {
                 <li><a href="#right">${arrowRight}</a></li>
             </ul>
         </nav>`;
-    //sectionGame.innerHTML = backgroundTrack1 + arrowsFixed;
     sectionGame.innerHTML = arrowsFixed;
 
     sectionGame.append(bgImage);
@@ -594,15 +613,10 @@ const startGame = () => {
     renderTableArrows(sectionGame);
 
     songGame.addEventListener("ended", () => {
-
         sectionGame.remove();
-
         finalScore =  maxCombo ? totalScore * maxCombo : totalScore;
-
         sessionStorage.setItem("totalScore", totalScore);
-
         renderScore();
-
     });
 
     intersectionObserver();
@@ -724,4 +738,4 @@ const startGame = () => {
 
     body.addEventListener("keydown", handleKeyboard);
 
-}
+};
