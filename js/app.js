@@ -5,7 +5,6 @@ const listRef = ref(database, 'table-score');
 
 const body = document.body;
 body.className = "overflow-y-hidden bg-neutral-700";
-//body.className = "bg-neutral-700";
 
 const main = document.getElementById("main");
 
@@ -115,24 +114,6 @@ const renderInitialScreen = () => {
 };
 
 renderInitialScreen();
-
-// Test //
-/*let track1 = [];
-const asd = () => {
-    for (let i = 0; i < 1000; i++) {
-        if(i % 4 === 0){
-            track1.push(1);
-        }
-        track1.push(0);
-        track1.push(0);
-        track1.push(0);
-    }
-    track1.push(1);
-    track1.push(1);
-    track1.push(1);
-    track1.push(1);
-}
-asd();*/
 
 const track1 = [
     0,0,0,0,
@@ -342,9 +323,6 @@ const intersectionObserver = () => {
                 score = "GREAT";
                 if (!entry.isIntersecting) return;
                 score = "PERFECT";
-
-                //console.log(songGame.currentTime);
-
             }
             else if(observer.rootMargin === marginGreat){
                 spyElement.classList.add("active");
@@ -658,10 +636,10 @@ const startGame = () => {
             perfectCount += 1;
             if(preScore === "PERFECT"){
                 maxCombo += 1;
-                //maxComboScore.textContent = maxCombo;
-                //maxComboScore.style.color = scoreSelectObj.color;
-                //maxComboScore.classList.add("textAnimate");
-                //hiddenTimer(maxComboScore);
+                /*maxComboScore.textContent = maxCombo;
+                maxComboScore.style.color = scoreSelectObj.color;
+                maxComboScore.classList.add("textAnimate");
+                hiddenTimer(maxComboScore);*/
             }
         }else if(score === "GREAT"){
             greatCount += 1;
@@ -678,8 +656,6 @@ const startGame = () => {
     handleKeyboard =  (e) => {
         //console.log(e);
         e.preventDefault();
-
-        //console.log(`Punchi: ${songGame.currentTime}`);
 
         let scoreSelectObj = scoreObjects.find(obj => obj.score === score);
 
@@ -714,21 +690,11 @@ const startGame = () => {
 
             spyElement.classList.remove("active");
             bgColor.style.backgroundColor = red;
-
             score = "MISS";
             scoreSelectObj = scoreObjects[4];
             scoreRender(score, scoreSelectObj);
 
         }
-
-        /*console.log("---------------");
-        console.log(perfectCount);
-        console.log(greatCount);
-        console.log(goodCount);
-        console.log(badCount);
-        console.log(missCount);
-        console.log(maxCombo);
-        console.log(totalScore);*/
 
     }
 
