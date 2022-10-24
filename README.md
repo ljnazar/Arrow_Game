@@ -2,7 +2,7 @@
 
  JavaScript implementation  
 
- Game like as "Pump It Up"  
+ Game resemblance of "Pump It Up"  
 
 - Intersection Observer API  
 - TailWind
