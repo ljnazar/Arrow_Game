@@ -398,10 +398,6 @@ let idIntervalScroll;
 let finalScoreStorage;
 let namePlayerStorage;
 
-const bgImage = document.createElement("div");
-bgImage.className = "z-30 fixed inset-0";
-bgImage.style.backgroundImage = "url('../img/mountains.png')";
-
 const propertyButtonScore = "border-2 border-gray-800 rounded-lg px-5 py-3 font-bold text text-gray-600 cursor-pointer hover:bg-gray-800 hover:text-gray-200";
 
 const renderPositionTable = (scoreObjs) => {
@@ -440,8 +436,6 @@ const renderPositionTable = (scoreObjs) => {
         buttonPlayAgain.className = "z-40 mt-6 mb-60";
         buttonPlayAgain.innerHTML = `<button class="${propertyButtonScore}">Play Again</button>`;
         sectionPosition.append(buttonPlayAgain);
-
-        sectionPosition.append(bgImage);
     
         main.append(sectionPosition);
     
@@ -500,8 +494,6 @@ const renderScore = () => {
     tablePosition.innerHTML = scoreDetail;
     sectionScore.append(tablePosition);
 
-    sectionScore.append(bgImage);
-
     const buttonViewPosition = document.createElement("div");
     buttonViewPosition.className = "z-40 mt-8";
     buttonViewPosition.innerHTML = `<button class="${propertyButtonScore}">View Position Table</button>`;
@@ -529,7 +521,7 @@ const renderScore = () => {
 
 };
 
-const loadGame = (sectionGame) => {
+const loadGame = (sectionGame, bgImage) => {
     let timerInterval
     Swal.fire({
         title: "Instructions to play",
@@ -544,6 +536,8 @@ const loadGame = (sectionGame) => {
             clearInterval(timerInterval);
             sectionGame.classList.remove("d-none");
             sectionGame.classList.add("d.block");
+            bgImage.classList.remove("d-none");
+            bgImage.classList.add("d.block");
             songGame.volume = generalVolume;
             songGame.play();
             // Auto Scroll
@@ -563,10 +557,15 @@ const startGame = () => {
 
     sectionInitial.remove();
 
+    const bgImage = document.createElement("div");
+    bgImage.className = "d-none z-30 fixed inset-0";
+    bgImage.style.backgroundImage = "url('../img/mountains.png')";
+    main.append(bgImage);
+
     const sectionGame = document.createElement("section");
     sectionGame.className = "d-none flex flex-col items-center";
 
-    loadGame(sectionGame);
+    loadGame(sectionGame, bgImage);
 
     const arrowsFixed = `
         <nav class="fixed pt-10 z-10 flex justify-center">
@@ -578,8 +577,6 @@ const startGame = () => {
             </ul>
         </nav>`;
     sectionGame.innerHTML = arrowsFixed;
-
-    sectionGame.append(bgImage);
 
     const bgColor = document.createElement("div");
     bgColor.className = "z-0 fixed inset-0 opacity-20";
