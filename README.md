@@ -1,2 +1,9 @@
-# Arrow Game
- JavaScript implementation - in progress
+# Arrow Game  
+
+ JavaScript implementation  
+
+ Game like as "Pump It Up"  
+
+- Intersection Observer API  
+- TailWind
+- Firebase "Realtime Database"
