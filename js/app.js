@@ -27,7 +27,7 @@ const renderInitialScreen = () => {
     sectionInitial.className = "h-screen";
 
     const initialScreen = `
-        <h1 class="mt-10 text-center text-zinc-200 text-7xl font-family-title font-bold text-shadow">Arrow Game</h1>
+        <h1 class="pt-10 text-center text-zinc-200 text-7xl font-family-title font-bold text-shadow">Arrow Game</h1>
         <video class="opacity-50 bg-z-index h-screen w-screen object-cover fixed inset-0" autoplay muted loop>
             <source src="video/Initial_Vid.mp4" type="video/mp4">
         </video>`;
@@ -433,7 +433,7 @@ const renderPositionTable = (scoreObjs) => {
         tablePosition.append(tbody);
 
         const buttonPlayAgain = document.createElement("div");
-        buttonPlayAgain.className = "z-40 mt-6 mb-60";
+        buttonPlayAgain.className = "z-40 mt-6 mb-72";
         buttonPlayAgain.innerHTML = `<button class="${propertyButtonScore}">Play Again</button>`;
         sectionPosition.append(buttonPlayAgain);
     
@@ -471,7 +471,11 @@ const GetTableScore = () => {
     });
 };
 
-
+// Set data to Firebase
+const newDataRef = push(listRef);
+const writeDataScore = (storageA, storegeB) => {
+    set(newDataRef, {"name": storageA, "score": storegeB});
+};
 
 const renderScore = () => {
 
@@ -506,16 +510,8 @@ const renderScore = () => {
         GetTableScore();
     });
 
-    sessionStorage.setItem("finalScore", finalScore);
     finalScoreStorage = sessionStorage.getItem("finalScore");
-
     namePlayerStorage = sessionStorage.getItem("name");
-
-    // Set data to Firebase
-    const newDataRef = push(listRef);
-    const writeDataScore = (storageA, storegeB) => {
-        set(newDataRef, {"name": storageA, "score": storegeB});
-    };
 
     writeDataScore(namePlayerStorage, finalScoreStorage);
 
@@ -588,10 +584,15 @@ const startGame = () => {
 
     songGame.addEventListener("ended", () => {
         sectionGame.remove();
+        divLoader.className = "loader absolute inset-0 mt-52 mx-auto";
+        divLoader.style.display = "block";
         finalScore =  maxCombo ? totalScore * maxCombo : totalScore;
-        sessionStorage.setItem("totalScore", totalScore);
+        sessionStorage.setItem("finalScore", finalScore);
         body.className = "bg-zinc-50";
-        renderScore();
+        setTimeout( () => {
+            divLoader.style.display = "none";
+            renderScore();
+        }, 4000);
     });
 
     intersectionObserver();
