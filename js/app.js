@@ -418,11 +418,13 @@ let finalScore = 0;
 let idIntervalScroll;
 
 let finalScoreStorage;
-let namePayerStorage;
+let namePlayerStorage;
 
 const bgImage = document.createElement("div");
 bgImage.className = "z-30 fixed inset-0";
 bgImage.style.backgroundImage = "url('../img/mountains.png')";
+
+const propertyButtonScore = "border-2 border-gray-800 rounded-lg px-5 py-3 font-bold text text-gray-600 cursor-pointer hover:bg-gray-800 hover:text-gray-200";
 
 const renderPositionTable = (scoreObjs) => {
 
@@ -444,10 +446,10 @@ const renderPositionTable = (scoreObjs) => {
         let aux = "";
         let count = 1;
         scoreObjs.forEach( obj => {
-            if(obj.name === namePayerStorage && obj.score === finalScoreStorage){
-                aux += `<tr><td class="bg-teal-400">${count}</td><td class="bg-teal-400">${obj.name}</td><td class="bg-teal-400">${obj.score}</td></tr>`;
+            if(obj.name === namePlayerStorage && obj.score === finalScoreStorage){
+                aux += `<tr><td class="positionTable bg-teal-400">${count}</td><td class="positionTable bg-teal-400">${obj.name}</td><td class="positionTable bg-teal-400">${obj.score}</td></tr>`;
             }else{
-                aux += `<tr><td>${count}</td><td>${obj.name}</td><td>${obj.score}</td></tr>`;
+                aux += `<tr><td class="positionTable bg-slate-200">${count}</td><td class="positionTable bg-slate-200">${obj.name}</td><td class="positionTable bg-slate-200">${obj.score}</td></tr>`;
             }
             count++;
         });
@@ -457,8 +459,8 @@ const renderPositionTable = (scoreObjs) => {
         tablePosition.append(tbody);
 
         const buttonPlayAgain = document.createElement("div");
-        buttonPlayAgain.className = "z-40 mt-6 mb-56";
-        buttonPlayAgain.innerHTML = "<button>Play Again</button>";
+        buttonPlayAgain.className = "z-40 mt-6 mb-60";
+        buttonPlayAgain.innerHTML = `<button class="${propertyButtonScore}">Play Again</button>`;
         sectionPosition.append(buttonPlayAgain);
 
         sectionPosition.append(bgImage);
@@ -509,22 +511,22 @@ const renderScore = () => {
 
     const tablePosition = document.createElement("table");
     let scoreDetail = `
-    <tr><td>PERFECT</td><td>${perfectCount}</td></tr>
-    <tr><td>GREAT</td><td>${greatCount}</td></tr>
-    <tr><td>GOOD</td><td>${goodCount}</td></tr>
-    <tr><td>BAD</td><td>${badCount}</td></tr>
-    <tr><td>MISS</td><td>${missCount}</td></tr>
-    <tr><td>TOTAL SCORE</td><td>${totalScore}</td></tr>
-    <tr><td>MAX COMBO</td><td>${maxCombo}</td></tr>
-    <tr><td>FINAL SCORE</td><td>${finalScore}</td></tr>`;
+    <tr><td><figure class='text-[#3b82f6] font-bold'>PERFECT</figure></td><td><figure class='text-[#3b82f6] font-bold text-center text-[${blue}]'>${perfectCount}</figure></td></tr>
+    <tr><td><figure class='text-[#22c55e] font-bold'>GREAT</figure></td><td><figure class='text-[#22c55e] font-bold text-center'>${greatCount}</figure></td></tr>
+    <tr><td><figure class='text-[#eab308] font-bold'>GOOD</figure></td><td><figure class='text-[#eab308] font-bold text-center'>${goodCount}</figure></td></tr>
+    <tr><td><figure class='text-[#d946ef] font-bold'>BAD</figure></td><td><figure class='text-[#d946ef] font-bold text-center'>${badCount}</figure></td></tr>
+    <tr><td><figure class='text-[#ef4444] font-bold'>MISS</figure></td><td><figure class='text-[#ef4444] font-bold text-center'>${missCount}</figure></td></tr>
+    <tr><td><figure class='font-bold'>TOTAL SCORE</figure></td><td><figure class='font-bold text-center'>${totalScore}</figure></td></tr>
+    <tr><td><figure class='font-bold'>MAX COMBO</figure></td><td><figure class='font-bold text-center'>${maxCombo}</figure></td></tr>
+    <tr><td><figure class='font-extrabold'>FINAL SCORE</figure></td><td><figure class='text-center font-extrabold'>${finalScore}</figure></td></tr>`;
     tablePosition.innerHTML = scoreDetail;
     sectionScore.append(tablePosition);
 
     sectionScore.append(bgImage);
 
     const buttonViewPosition = document.createElement("div");
-    buttonViewPosition.className = "z-40";
-    buttonViewPosition.innerHTML = "<button>View Position Table</button>";
+    buttonViewPosition.className = "z-40 mt-8";
+    buttonViewPosition.innerHTML = `<button class="${propertyButtonScore}">View Position Table</button>`;
     sectionScore.append(buttonViewPosition);
 
     main.append(sectionScore);
@@ -537,7 +539,7 @@ const renderScore = () => {
     sessionStorage.setItem("finalScore", finalScore);
     finalScoreStorage = sessionStorage.getItem("finalScore");
 
-    namePayerStorage = sessionStorage.getItem("name");
+    namePlayerStorage = sessionStorage.getItem("name");
 
     // Set data to Firebase
     const newDataRef = push(listRef);
@@ -545,7 +547,7 @@ const renderScore = () => {
         set(newDataRef, {"name": storageA, "score": storegeB});
     };
 
-    writeDataScore(namePayerStorage, finalScoreStorage);
+    writeDataScore(namePlayerStorage, finalScoreStorage);
 
 };
 
