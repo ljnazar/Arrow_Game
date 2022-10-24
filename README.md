@@ -2,7 +2,7 @@
 
  JavaScript implementation  
 
- Game resemblance of "Pump It Up"  
+ Game resemblance of "Pump It Up"  https://arrow-game.vercel.app/
 
 - Intersection Observer API  
 - TailWind
