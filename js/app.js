@@ -510,14 +510,14 @@ const renderScore = () => {
 
     const tablePosition = document.createElement("table");
     let scoreDetail = `
-    <tr><td><figure class='text-[#3b82f6] font-bold'>PERFECT</figure></td><td><figure class='text-[#3b82f6] font-bold text-center text-[${blue}]'>${perfectCount}</figure></td></tr>
-    <tr><td><figure class='text-[#22c55e] font-bold'>GREAT</figure></td><td><figure class='text-[#22c55e] font-bold text-center'>${greatCount}</figure></td></tr>
-    <tr><td><figure class='text-[#eab308] font-bold'>GOOD</figure></td><td><figure class='text-[#eab308] font-bold text-center'>${goodCount}</figure></td></tr>
-    <tr><td><figure class='text-[#d946ef] font-bold'>BAD</figure></td><td><figure class='text-[#d946ef] font-bold text-center'>${badCount}</figure></td></tr>
-    <tr><td><figure class='text-[#ef4444] font-bold'>MISS</figure></td><td><figure class='text-[#ef4444] font-bold text-center'>${missCount}</figure></td></tr>
-    <tr><td><figure class='font-bold'>TOTAL SCORE</figure></td><td><figure class='font-bold text-center'>${totalScore}</figure></td></tr>
-    <tr><td><figure class='font-bold'>MAX COMBO</figure></td><td><figure class='font-bold text-center'>${maxCombo}</figure></td></tr>
-    <tr><td><figure class='font-extrabold'>FINAL SCORE</figure></td><td><figure class='text-center font-extrabold'>${finalScore}</figure></td></tr>`;
+    <tr><td><figure class='text-[#3b82f6] font-bold'>PERFECT</figure></td><td><figure class='text-[#3b82f6] font-bold text-center'><span id="scorePerfect">0</span></figure></td></tr>
+    <tr><td><figure class='text-[#22c55e] font-bold'>GREAT</figure></td><td><figure class='text-[#22c55e] font-bold text-center'><span id="scoreGreat">0</span></figure></td></tr>
+    <tr><td><figure class='text-[#eab308] font-bold'>GOOD</figure></td><td><figure class='text-[#eab308] font-bold text-center'><span id="scoreGood">0</span></figure></td></tr>
+    <tr><td><figure class='text-[#d946ef] font-bold'>BAD</figure></td><td><figure class='text-[#d946ef] font-bold text-center'><span id="scoreBad">0</span></figure></td></tr>
+    <tr><td><figure class='text-[#ef4444] font-bold'>MISS</figure></td><td><figure class='text-[#ef4444] font-bold text-center'><span id="scoreMiss">0</span></figure></td></tr>
+    <tr><td><figure class='font-bold'>TOTAL SCORE</figure></td><td><figure class='font-bold text-center'><span id="scoreTotal">0</span></figure></td></tr>
+    <tr><td><figure class='font-bold'>MAX COMBO</figure></td><td><figure class='font-bold text-center'><span id="scoreCombo">0</span></figure></td></tr>
+    <tr><td><figure class='font-extrabold'>FINAL SCORE</figure></td><td><figure class='text-center font-extrabold'><span id="scoreFinal">0</span></figure></td></tr>`;
     tablePosition.innerHTML = scoreDetail;
     sectionScore.append(tablePosition);
 
@@ -527,6 +527,59 @@ const renderScore = () => {
     sectionScore.append(buttonViewPosition);
 
     main.append(sectionScore);
+
+    const scorePerfect = document.getElementById("scorePerfect");
+    const scoreGreat = document.getElementById("scoreGreat");
+    const scoreGood = document.getElementById("scoreGood");
+    const scoreBad = document.getElementById("scoreBad");
+    const scoreMiss = document.getElementById("scoreMiss");
+    const scoreTotal = document.getElementById("scoreTotal");
+    const scoreCombo = document.getElementById("scoreCombo");
+    const scoreFinal = document.getElementById("scoreFinal");
+
+    const toPositive = (number) => {
+        let aux;
+        if(number < 0){
+            aux = number;
+            aux -= aux * 2;
+        }
+        else if(number > 0){
+            aux = number;
+        }else{
+            aux = 0;
+        }
+        return aux;
+    };
+    
+    let counterScore = (timeOut, speed, scoreNumber, outScore) => {
+
+        let initialNumber = 0;
+    
+        setTimeout(() => {
+            let interval = setInterval(()=>{
+                if(initialNumber >= toPositive(scoreNumber)){
+                    clearInterval(interval);
+                } else {
+                    if(scoreNumber >= 0){
+                        initialNumber ++;
+                        outScore.innerHTML = initialNumber;
+                    }else{
+                        initialNumber ++;
+                        outScore.innerHTML = "-" + initialNumber;
+                    }
+                }
+            }, speed);
+        }, timeOut);
+    };
+    
+    counterScore(0, 100, perfectCount, scorePerfect);
+    counterScore(500, 100, greatCount, scoreGreat);
+    counterScore(1000, 100, goodCount, scoreGood);
+    counterScore(1500, 100, badCount, scoreBad);
+    counterScore(2000, 100, missCount, scoreMiss);
+    counterScore(2500, 2, totalScore, scoreTotal);
+    counterScore(3000, 100, maxCombo, scoreCombo);
+    counterScore(3500, 2, finalScore, scoreFinal);
 
     buttonViewPosition.addEventListener("click", () => {
         sectionScore.remove();
