@@ -504,6 +504,11 @@ const renderScore = () => {
 
     clearInterval(idIntervalScroll);
 
+    const songCounter = new Audio("../audio/audio-counter.mp3");
+    songCounter.volume = generalVolume;
+    songCounter.loop = true;
+    songCounter.play();
+
     const sectionScore = document.createElement("section");
     sectionScore.className = "flex flex-col items-center";
     sectionScore.innerHTML = "<h1 class='py-6 text-4xl font-family-player-points'>---- PLAYER POINTS ----</h1>";
@@ -550,6 +555,8 @@ const renderScore = () => {
         }
         return aux;
     };
+
+    let flagEqual = false;
     
     let counterScore = (timeOut, speed, scoreNumber, outScore) => {
 
@@ -559,6 +566,17 @@ const renderScore = () => {
             let interval = setInterval(()=>{
                 if(initialNumber >= toPositive(scoreNumber)){
                     clearInterval(interval);
+                    if(initialNumber === toPositive(finalScore)){
+                        if(flagEqual){
+                            songCounter.pause();
+                            songCounter.currentTime = 0; 
+                        }else if(totalScore === finalScore){
+                            flagEqual = true;
+                        }else{
+                            songCounter.pause();
+                            songCounter.currentTime = 0; 
+                        }
+                    }
                 } else {
                     if(scoreNumber >= 0){
                         initialNumber ++;
@@ -668,7 +686,7 @@ const startGame = () => {
         setTimeout( () => {
             divLoader.style.display = "none";
             renderScore();
-        }, 4000);
+        }, 3000);
     });
 
     intersectionObserver();
