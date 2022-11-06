@@ -575,8 +575,8 @@ const renderScore = () => {
                         }else{
                             songCounter.pause();
                             songCounter.currentTime = 0; 
-                        }
-                    }
+                        }   
+                    }  
                 } else {
                     if(scoreNumber >= 0){
                         initialNumber ++;
