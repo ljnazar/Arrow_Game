@@ -706,7 +706,7 @@ const startGame = () => {
         setTimeout( () => {
             element.classList.remove("d-block");
             element.classList.add("d-none");
-          }, 250);
+        }, 250);
     };
 
     const textScore = document.createElement("h2");
@@ -791,7 +791,7 @@ const startGame = () => {
 
     }
 
-    handleKeyboard =  (e) => {
+    handletouch =  (e) => {
 
         alert(e);
 
