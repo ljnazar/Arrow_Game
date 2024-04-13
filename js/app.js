@@ -326,6 +326,7 @@ let spyArrow;
 let idArrow;
 let score;
 let handleKeyboard;
+let handletouch;
 
 const intersectionObserver = () => {
 
@@ -790,6 +791,13 @@ const startGame = () => {
 
     }
 
+    handleKeyboard =  (e) => {
+
+        alert(e);
+
+    }
+
     body.addEventListener("keydown", handleKeyboard);
+    body.addEventListener("touchstart", handletouch);
 
 };
