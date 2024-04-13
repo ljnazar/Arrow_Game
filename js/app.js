@@ -795,7 +795,6 @@ const startGame = () => {
 
         console.log("touch detectado");
         console.log(e);
-        alert(e);
 
     }
 
