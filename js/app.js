@@ -746,7 +746,7 @@ const startGame = () => {
         preScore = score;
     };
 
-    handleKeyboard =  (e) => {
+    handleKeyboard = (e) => {
         //console.log(e);
         e.preventDefault();
 
@@ -791,8 +791,9 @@ const startGame = () => {
 
     }
 
-    handletouch =  (e) => {
-
+    handletouch = (e) => {
+        
+        console.log(e);
         alert(e);
 
     }
