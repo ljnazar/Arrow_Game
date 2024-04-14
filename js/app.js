@@ -394,6 +394,7 @@ const intersectionObserver = () => {
 };
 
 let heightScreen = window.innerHeight;
+let widthScreen = window.innerWidth;
 
 let marginPerfect = `-35px 0px ${125 - heightScreen}px 0px`;
 let marginGreat = `-25px 0px ${135 - heightScreen}px 0px`;
@@ -668,6 +669,16 @@ const startGame = () => {
             </ul>
         </nav>`;
     sectionGame.innerHTML = arrowsFixed;
+
+    // For tablet or mobile
+    // Test
+    //if(widthScreen < 1500){
+    //    const arrowsKeyboard = `
+    //        <nav class="fixed pt-10 z-60 flex justify-center bottom-0">
+    //            <div class="w-20 h-20 bg-red-500"></div>
+    //        </nav>`;
+    //    sectionGame.innerHTML = arrowsKeyboard;
+    //}
 
     const bgColor = document.createElement("div");
     bgColor.className = "z-0 fixed inset-0 opacity-20";
